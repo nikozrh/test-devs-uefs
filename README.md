@@ -27,6 +27,18 @@ Crie um modelo entidade ralação onde:
 - O usuário (users) tem diferentes postagens (posts)
 - As postagens (posts) tem multiples palavras-chave tags
 
+```mermaid
+
+---
+title: DER
+---
+erDiagram
+    user ||--o{ post : "has many"
+    post ||--o{ tag : "has multiple"
+
+```
+
+
 Os posts tem os seguintes campos:
 
 - id
@@ -64,8 +76,16 @@ Finalmente crie os endpoints com os verbos HTTP (get, post, put, delete) das seg
  - Rota POST `/posts` salvar um novo uma postagem
  - Rota PUT `/posts/{id}` atualizar uma postagem
  - Rota DELETE `/posts/{id}` deletar uma postagem
+ - Rota POST `/posts/{id}/tags` associar tags a posts 
+
+### CRUD (create, read, update e delete) da tabela palavras-chave (tags)
+ - Rota GET `/tags` para listar paginada de tags
+ - Rota GET `/tags/{id}` listar uma tag por id
+ - Rota POST `/tags` salvar um novo uma tag
+ - Rota PUT `/tags/{id}` atualizar uma tag
+ - Rota DELETE `/tags/{id}` deletar uma tag
  
- 
+ > As rotas da api podem ser acessadas com o prefixo `api` por exemplo: `/api/posts`
  
  > Lembre que nos métodos de PUT vc precisa enviar uma requisição POST com o parametro `_method = PUT` e no método DELETE deve passar o parâmetro `_method = DELETE` para poder testar no postman ou cliente para interagir com a API
  
