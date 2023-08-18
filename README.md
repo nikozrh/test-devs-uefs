@@ -28,7 +28,6 @@ Crie um modelo entidade ralação onde:
 - As postagens (posts) tem multiples palavras-chave tags
 
 ```mermaid
-
 ---
 title: DER
 ---
