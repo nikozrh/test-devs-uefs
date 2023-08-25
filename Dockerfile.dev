@@ -1,0 +1,70 @@
+FROM composer:latest as vendor
+WORKDIR /app
+
+COPY database/ /app/database/
+
+COPY composer.json /app/composer.json
+COPY composer.lock /app/composer.lock
+
+RUN composer install \
+    --ignore-platform-reqs \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts \
+    --prefer-dist
+
+FROM node:18 AS node
+FROM php:8.2.8-apache as base
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV ACCEPT_EULA=Y
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /var/www/html
+
+COPY --from=vendor /usr/bin/composer /bin/composer
+COPY --from=vendor /app/vendor/ /var/www/html/vendor/
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+
+RUN apt-get update && apt-get install -y apt-utils libpq-dev gnupg2 libzip-dev nano cron supervisor git \
+    && docker-php-ext-configure zip
+
+RUN pecl install xdebug && docker-php-ext-enable xdebug \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/xdebug.ini
+
+RUN docker-php-ext-install pdo ftp zip bcmath
+RUN a2enmod rewrite
+# SQL Server
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update
+RUN apt-get install --no-install-recommends --no-install-suggests -y \
+    msodbcsql18 mssql-tools18 unixodbc-dev locales
+
+RUN pecl install sqlsrv pdo_sqlsrv
+RUN docker-php-ext-enable sqlsrv pdo_sqlsrv
+
+RUN mkdir -p /var/log/supervisor
+COPY ./docker/SUPERVISOR/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN (crontab -l ; echo "* * * * * cd /var/www/html && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1") | crontab
+RUN printf '[PHP]\ndate.timezone = "America/Bahia"\n' > /usr/local/etc/php/conf.d/tzone.ini
+#RUN printf '[PHP]\nmemory_limit = "2048M"\n' > /usr/local/etc/php/conf.d/memory_limit.ini
+
+
+COPY ./docker/APACHE/000-default.conf /etc/apache2/sites-available
+COPY ./docker/SUPERVISOR/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+COPY . .
+
+RUN chmod -R gu+w storage
+RUN chmod -R guo+w storage
+RUN php artisan key:generate
+RUN php artisan jwt:secret
+RUN php artisan optimize:clear
+RUN npm install
+
+CMD ["supervisord","-c","/etc/supervisor/conf.d/supervisord.conf"]
