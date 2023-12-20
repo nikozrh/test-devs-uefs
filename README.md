@@ -1,100 +1,49 @@
-# Instalação
+# Teste Técnico para a vaga de Desenvolvedor no projeto UEFS - Avansys/ACP Group
 
-Nescessário instalar 
+Este desafio é para a posição de Engenheiro de Software e envolve a criação de uma API Restful usando PHP, o framework Laravel (versão 8 ou superior), o Sistema de Gerenciamento de Banco de Dados (SGBD) à sua escolha e Docker. O prazo para este desafio é de 5 dias, com a entrega dos códigos fonte via GitHub para análise no seguinte endereço de e-mail: email@email.com. Pode enviar um fork do repositório com as implementações ou o próprio repositório criado com as implementações.
 
-- `composer` gestor de pacotes do php 
-- `php 8.1` ou superior
-- Mysql ou PostgreSQL
+## Critérios de Avaliação
 
-Instalar as dependências do php
+- Conhecimento e uso de recursos do Laravel.
+- Familiaridade com Docker e Docker Compose.
+- Organização e documentação do código.
+- Competência em lógica de programação e nível de abstração.
+- Aplicação dos princípios do conceito SOLID.
+- Utilização de testes unitários (PHPUnit ou PEST).
+- Adesão aos padrões PSR.
+- Implementação eficaz de uma API Restful.
+- Utilização adequada dos recursos do SGBD escolhido.
 
-`composer install`
+## Tarefas
 
-Para rodar a aplicação só precisa do comando
+Desenvolva uma API em Laravel 10 que inclua o CRUD para:
+- Usuários
+- Posts
+- Tags
 
-`php artisan serve`
+As regras de estruturação da modelagem são:
+- O usuário (users) possui diferentes postagens (posts).
+- As postagens (posts) possuem várias palavras-chave (tags).
 
+Implemente os seguintes endpoints com operações CRUD para:
+- Usuários
+- Posts
+- Tags
 
-Crie um banco de dados e configure no .env para rodar as migrations da aplicação
+**NOTA:**
+As rotas devem ser acessadas com o prefixo /api. Por exemplo: /api/posts  
+É essencial o desenvolvimento de um Dockerfile e um docker-compose para garantir que o projeto seja executado na máquina do avaliador.  
+É de suma importância a descrição detalhada dos endpoints e funcionalidades para que o avaliador possa testar o projeto em sua máquina.
 
-`php artisan migrate`
+## Opcionais (Não obrigatórios, mas recomendados)
 
+- Implementação de testes unitários.
+- Uso de Swagger ou Scribe Documentation.
+- Criação de uma interface gráfica simples para exposição dos dados (React, Vue ou Bootstrap).
 
-## TESTE
+Após a avaliação técnica, em caso de aprovação, entraremos em contato para uma conversa técnica sobre a implementação. Se o candidato não for aprovado, forneceremos um retorno com o aviso e o motivo.
 
-Crie um modelo entidade ralação onde:
+<br>
 
-- O usuário (users) tem diferentes postagens (posts)
-- As postagens (posts) tem multiples palavras-chave tags
-
-```mermaid
----
-title: DER
----
-erDiagram
-    user ||--o{ post : "has many"
-    post ||--o{ tag : "has multiple"
-
-```
-
-
-Os posts tem os seguintes campos:
-
-- id
-- title
-- description
-- created_at
-- updated_at
-
-As tags tem 
-
-- id
-- name
-
-
-> Lembre que tem comandos para criar as migrations, modelos e controllers `php artisan make:model Todo -mc`
-
-> Lembre que nas migrations os campos created_at e updated_at são gerados nas migrations `$table->timestamps();`
-
-
-## Endpoints
-
-Finalmente crie os endpoints com os verbos HTTP (get, post, put, delete) das seguintes tabelas
-
-#### CRUD (create, read, update e delete) da tabela usuários (users)
- - Rota GET `/users` para lista paginada de usuários
- - Rota GET `/users/{id}` listar um usuário por id
- - Rota POST `/users` salvar um novo usuário
- - Rota PUT `/users/{id}` atualizar um usuário
- - Rota DELETE `/users/{id}` deletar um usuário
-
-
-#### CRUD (create, read, update e delete) da tabela postagens (posts)
- - Rota GET `/posts` para listar paginada de postagens
- - Rota GET `/posts/{id}` listar uma postagem por id
- - Rota POST `/posts` salvar um novo uma postagem
- - Rota PUT `/posts/{id}` atualizar uma postagem
- - Rota DELETE `/posts/{id}` deletar uma postagem
- - Rota POST `/posts/{id}/tags` associar tags a posts 
-
-### CRUD (create, read, update e delete) da tabela palavras-chave (tags)
- - Rota GET `/tags` para listar paginada de tags
- - Rota GET `/tags/{id}` listar uma tag por id
- - Rota POST `/tags` salvar um novo uma tag
- - Rota PUT `/tags/{id}` atualizar uma tag
- - Rota DELETE `/tags/{id}` deletar uma tag
- 
- > As rotas da api podem ser acessadas com o prefixo `api` por exemplo: `/api/posts`
- 
- > Lembre que nos métodos de PUT vc precisa enviar uma requisição POST com o parametro `_method = PUT` e no método DELETE deve passar o parâmetro `_method = DELETE` para poder testar no postman ou cliente para interagir com a API
- 
- 
- 
-## Serão avaliados
-
-- Uso do framework Laravel 
-- Conhecimento sobre modelagem de dados
-- Criação de API restfull 
-
-
-Sucesso e bom teste!
+### Boa sorte! <br>
+Equipe de Desenvolvimento AVANSYS/ACP - Projeto UEFS
