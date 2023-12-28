@@ -1,4 +1,4 @@
-# Teste Técnico para a vaga de Desenvolvedor no projeto UEFS - Avansys/ACP Group
+# Teste Técnico para a vaga de Engenheiro de Software no projeto UEFS - Avansys/ACP Group
 
 Este desafio é para a posição de Engenheiro de Software e envolve a criação de uma API Restful usando PHP, o framework Laravel (versão 8 ou superior), o Sistema de Gerenciamento de Banco de Dados (SGBD) à sua escolha e Docker. O prazo para este desafio é de 5 dias, com a entrega dos códigos fonte via GitHub para análise no seguinte endereço de e-mail: epp@uefs.br. <br>
 Faça um fork do repositório, aplique a solução e envie para avaliação.
@@ -17,7 +17,7 @@ Faça um fork do repositório, aplique a solução e envie para avaliação.
 
 ## Tarefas
 
-Desenvolva uma API em Laravel 10 que inclua o CRUD para:
+Desenvolva uma API em Laravel que inclua o CRUD para:
 - Usuários
 - Posts
 - Tags
