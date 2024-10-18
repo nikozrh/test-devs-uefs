@@ -61,7 +61,7 @@ As rotas devem ser acessadas com o prefixo /api. Por exemplo: /api/posts
 
 - Implementação de testes unitários.
 - Uso de Swagger ou Scribe Documentation.
-- Criação de uma interface gráfica simples para exposição dos dados (React, Vue ou Bootstrap).
+- Criação de uma interface gráfica simples para exposição dos dados (React, Vue, Bootstrap, Blade ou Livewire).
 
 Após a avaliação técnica, em caso de aprovação, entraremos em contato para uma conversa técnica sobre a implementação. Se o candidato não for aprovado, forneceremos um retorno com o aviso e o motivo.
 
