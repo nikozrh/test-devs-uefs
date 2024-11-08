@@ -1,0 +1,32 @@
+services:
+    app:
+        restart: always
+        container_name: blog
+        build: ./docker/php
+        ports:
+            - "8000:80"
+        volumes:
+            - ${PATH_PROJECT}:/var/www/html
+        depends_on:
+            - db
+        networks:
+            - blog-network
+    db:
+        image: mysql:8.0.37
+        container_name: blog_db
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: 'blog'
+            MYSQL_ROOT_PASSWORD: "&Xfvx75701510"
+        volumes:
+            - ./docker/data/mysql:/var/lib/mysql
+            - ./.docker/db/schemes/:/docker-entrypoint-initdb.d/
+        ports:
+            - "3310:3306"
+        networks:
+            - blog-network
+
+networks:
+    blog-network:
+        driver: bridge
