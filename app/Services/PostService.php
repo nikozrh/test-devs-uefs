@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\PostRepository;
+use Illuminate\Support\Facades\Cache;
 
 class PostService
 {
@@ -14,7 +16,9 @@ class PostService
 
     public function all()
     {
-        return $this->postRepository->all();
+        return Cache::remember('posts.all', 60, function () {
+            return $this->postRepository->all();
+        });
     }
 
     public function find($id)
@@ -26,6 +30,8 @@ class PostService
     {
         $post = $this->postRepository->create($data);
 
+        Cache::forget('posts.all');
+
         return [
             'status' => true,
             'message' => 'Post cadastrado com sucesso.',
@@ -36,21 +42,25 @@ class PostService
     public function update($id, array $data)
     {
         $post = $this->postRepository->update($id, $data);
-        
+
+        Cache::forget('posts.all');
+
         return [
             'status' => true,
-            'message' => 'Post atualizado com sucesso',
-            'post' => $post
+            'message' => 'Post atualizado com sucesso.',
+            'post' => $post,
         ];
     }
 
     public function delete($id)
     {
         $this->postRepository->delete($id);
-    
+
+        Cache::forget('posts.all');
+
         return [
             'status' => true,
-            'message' => 'Post excluído com sucesso'
+            'message' => 'Post deletado com sucesso.',
         ];
     }
 }

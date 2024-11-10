@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Cache;
 
 class UserService
 {
@@ -14,7 +15,9 @@ class UserService
 
     public function all()
     {
-        return $this->userRepository->all();
+        return Cache::remember('users.all', 60, function () {
+            return $this->userRepository->all();
+        });
     }
 
     public function find($id)
@@ -25,6 +28,8 @@ class UserService
     public function store(array $data)
     { 
         $user = $this->userRepository->create($data);
+
+        Cache::forget('users.all');
         
         return [
             'status' => true,
@@ -37,6 +42,8 @@ class UserService
     {
         $user = $this->userRepository->update($id, $data);
 
+        Cache::forget('users.all');
+
         return [
             'status' => true,
             'message' => 'Usuário atualizado com sucesso',
@@ -47,6 +54,8 @@ class UserService
     public function destroy($id)
     {
         $this->userRepository->delete($id);
+
+        Cache::forget('users.all');
 
         return [
             'status' => true,

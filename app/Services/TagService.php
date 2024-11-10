@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Repositories\TagRepository;
+use Illuminate\Support\Facades\Cache;
 
 class TagService
 {
@@ -14,7 +15,9 @@ class TagService
 
     public function all()
     {
-        return $this->tagRepository->all();
+        return Cache::remember('tags.all', 60, function () {
+            return $this->tagRepository->all();
+        });
     }
 
     public function find($id)
@@ -25,7 +28,9 @@ class TagService
     public function create(array $data)
     {
         $tag = $this->tagRepository->create($data);
-        
+
+        Cache::forget('tags.all');
+
         return [
             'status' => true,
             'message' => 'Tag cadastrada com sucesso',
@@ -36,7 +41,9 @@ class TagService
     public function update($id, array $data)
     {
         $tag = $this->tagRepository->update($id, $data);
-    
+
+        Cache::forget('tags.all');
+
         return [
             'status' => true,
             'message' => 'Tag atualizada com sucesso',
@@ -47,7 +54,9 @@ class TagService
     public function delete($id)
     {
         $this->tagRepository->delete($id);
-        
+
+        Cache::forget('tags.all');
+
         return [
             'status' => true,
             'message' => 'Tag excluída com sucesso'

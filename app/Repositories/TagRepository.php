@@ -7,12 +7,12 @@ class TagRepository
 {
     public function all()
     {
-        return Tag::all();
+        return Tag::with('post')->get();
     }
 
     public function find($id)
     {
-        return Tag::findOrFail($id);
+        return Tag::with('post')->findOrFail($id);
     }
 
     public function create(array $data)

@@ -7,12 +7,12 @@ class PostRepository
 {
     public function all()
     {
-        return Post::all();
+        return Post::with(['user', 'tags'])->get();
     }
 
     public function find($id)
     {
-        return Post::findOrFail($id);
+        return Post::with(['user', 'tags'])->findOrFail($id);
     }
 
     public function create(array $data)

@@ -7,12 +7,12 @@ class UserRepository
 {
     public function all()
     {
-        return User::all();
+        return User::with('posts')->get();
     }
 
     public function find($id)
     {
-        return User::findOrFail($id);
+        return User::with('posts')->findOrFail($id);
     }
 
     public function create(array $data)
