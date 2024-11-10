@@ -22,8 +22,11 @@ cd test-devs-uefs
 Crie um arquivo .env na raiz do projeto e configure as variáveis de ambiente. Você pode usar o arquivo .env.example como base.
 
 ``Lembre-se por conta da aplicação esta utilizando o docker, na váriavel ambiente DB_HOSDT configurar para o nome do serviço de banco do docker, no caso dessa aplicação o nome do serviço é db``
-
 ### 3. Construa e inicie os contêineres Docker
+``
+Na raiz do projeto dentro da pasta docker será necessário criar uma pasta denominada data e dentro dela uma outra de nome mysql
+``
+### 3.1 Construa e inicie os contêineres Docker
 ```bash 
 docker-compose up -d --build
 ```
