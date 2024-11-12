@@ -7,7 +7,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-                                ![image](https://github.com/user-attachments/assets/f21f3595-b5f8-4c2e-8953-dc240fcec54f)
 
 # ACP GROUP - TESTE PRÁTICO. 
 ## Por Melquisedeque Bispo de Jesus.
@@ -43,6 +42,9 @@
     - E O docker-compose.yml (Raiz do projeto)
     - Comando(s)
     - 4.2 docker compose up -d
+
+    ![image](https://github.com/user-attachments/assets/872f892a-006d-4aed-badc-93d7dde6e35b)
+
     
 
 ## License
