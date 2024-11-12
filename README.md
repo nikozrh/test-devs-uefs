@@ -6,8 +6,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
-![image](https://github.com/user-attachments/assets/8b54c855-34f4-483e-9e1e-41cb6f1bd0b0)
-
 
 # ACP GROUP - TESTE PRÁTICO. 
 ## Por Melquisedeque Bispo de Jesus.
@@ -44,6 +42,7 @@
     - Comando(s)
     - 4.2 docker compose up -d
 
+![image](https://github.com/user-attachments/assets/b4c8adb5-74e2-4f2c-83b0-bc636156fe7f)
 
 
 ## License
