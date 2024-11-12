@@ -41,7 +41,10 @@
     - E O docker-compose.yml (Raiz do projeto)
     - Comando(s)
     - 4.2 docker compose up -d
-## 4. Adicional: Login Web (Acessando a raiz do proejto) 
+
+### 5. Sua API esta pronta!
+
+## 6. Bônus Adicional: Login Web (Acessando a raiz do proejto) 
 ![image](https://github.com/user-attachments/assets/b4c8adb5-74e2-4f2c-83b0-bc636156fe7f)
 
 
