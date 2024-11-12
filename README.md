@@ -41,6 +41,8 @@
     - E O docker-compose.yml (Raiz do projeto)
     - Comando(s)
     - 4.2 docker compose up -d
+    
+![image](https://github.com/user-attachments/assets/461ad7bf-3399-4808-b810-a0cf35c515a4)
 
 ## License
 
