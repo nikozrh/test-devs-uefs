@@ -41,6 +41,7 @@
     - E O docker-compose.yml (Raiz do projeto)
     - Comando(s)
     - 4.2 docker compose up -d
+    - Obs.: A porta 5432 para o banco PostgreSql, precisa estar livre.
 
 ### 5. Sua API esta pronta!
 
