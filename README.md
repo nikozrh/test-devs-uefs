@@ -32,6 +32,9 @@
     - 3.1 Configurar .env com banco de dados (PostgresSQL)
     - Comando(s)
     - 3.2 php artisan migrate   
+    - Popular Banco (opcional)
+    - 3.3  php artisan db:seed
+    - 3.31 php artisan migrate:fresh --seed
 ## 4. Instalar Dependências Docker.
     - 4.1 Arquivos já configurados
     - Na Pasta dockerfiles
