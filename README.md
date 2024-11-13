@@ -37,8 +37,7 @@
     - 3.31 php artisan migrate:fresh --seed
 ## 4. Instalar Dependências Docker.
     - 4.1 Arquivos já configurados
-    - Na Pasta dockerfiles
-    - E O docker-compose.yml (Raiz do projeto)
+    - Na Pasta /dockerfiles & docker-compose.yml (Raiz do projeto)
     - Comando(s)
     - 4.2 docker compose up -d
     - Obs.: A porta 5432 para o banco PostgreSql, precisa estar livre.
