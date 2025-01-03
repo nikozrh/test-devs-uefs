@@ -11,10 +11,6 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install mysqli pdo pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
  
-RUN apt-get update && apt-get install -y composer && \
-    composer install --working-dir=/var/www
-
-
 # Copiar os arquivos do projeto para dentro do contêiner
 COPY . /var/www
 
