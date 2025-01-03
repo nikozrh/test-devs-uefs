@@ -149,12 +149,9 @@ Exemplo de requisição para criar um novo usuário:
 
 POST /api/usuarios
 Content-Type: application/json
-```bash
-{
-  "name": "Joábio Vilela",
-  "email": "joabio.vilela@gmail.com",
-  "password": "xdJLKhfSJK54%4@@2e"
-}
+
+![Tela POST Usuario](https://github.com/user-attachments/assets/2a348d6d-3030-4787-92fd-ba63a193da65)
+
 
 ### Estrutura
 
