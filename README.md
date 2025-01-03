@@ -59,11 +59,10 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 1. Clone o repositório:
    ```bash
    git clone https://github.com/JoabioVilela/Blog-e-Rede-Social-Digital.git
-   cd Blog-e-Rede-Social-Digital
 
 2. Navegue até o diretório da API:
 	```bash
-    cd api_rede_social
+    cd Blog-e-Rede-Social-Digital/api_rede_social
 
 3. Instale as dependências:
 	```bash
@@ -73,46 +72,37 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 	```bash
     docker-compose up -d --build
 
-5. Acesse o contêiner da aplicação:
+5. Acessar o contêiner da aplicação e rodar as migrações:
    ```bash
-   docker exec -it laravel-app bash
-
-6. Configure o ambiente da aplicação:
-   ```bash
-   php artisan migrate --force
-
-7. Saia do ambiente da aplicação:
-   ```bash
-   exit
+   docker exec -it laravel-app bash -c "php artisan migrate --force"
    
-8. A API estará disponível em:
+6. A API estará disponível em:
 	```bash
     http://localhost:8000
 
  ![Tela app up](https://github.com/user-attachments/assets/9332d2fa-ee3e-4d1f-89b8-4a3b9fb8e1b7)
 
    
-9. A documentação estará em:
+7. A documentação estará em:
 	```bash
     http://localhost:8000/api/documentation
 
 ![Documentação](https://github.com/user-attachments/assets/69eafd2e-43f0-45a1-b666-0e86c49575bd)
 
 
-10. Navegue até o diretório do frontend:
+8. Navegue até o diretório do frontend:
     ```bash
-    cd ..
-    cd frontend_react
+    cd ../frontend_react
 
-11. Instale as dependências do React:
+9. Instale as dependências do React:
 	```bash
     npm install
    
-12. Inicie o servidor React:
+10. Inicie o servidor React:
 	```bash
     npm start
    
-13. O frontend estará disponível em:
+11. O frontend estará disponível em:
 	```bash
     http://localhost:3000
 
