@@ -70,7 +70,7 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
     
 4. Suba os contêineres Docker:
 	```bash
-    docker-compose up -d --build
+    docker compose up -d --build
 
 5. Acessar o contêiner da aplicação e rodar as migrações:
    ```bash
