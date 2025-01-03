@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: .././api_rede_social/Dockerfile
+      dockerfile: Dockerfile
     container_name: laravel-app
     ports:
       - "8000:8000"
