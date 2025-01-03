@@ -148,7 +148,7 @@ function PostManager() {
       }}
     >Adicionar Novo Post</button>
       <p style={{ color: 'red', display: usuarios.length === 0 || tags.length === 0 ? 'block' : 'none' }}>
-        Botão será habilitador após cadastrar usuário(s) e tag(s). Pressione F5.
+        Botão será habilitado após cadastrar usuário(s) e tag(s). Pressione F5.
       </p>
       <br></br>
 
