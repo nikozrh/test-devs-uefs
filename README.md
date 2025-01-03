@@ -10,7 +10,7 @@ A aplicação é dividida em dois componentes principais:
 - Backend
 - Frontend
 
-Ambos seguindo práticas de desenvolvimento modernas para garantir robustez, escalabilidade e fácil manutenção.
+Ambos seguindo boas práticas de desenvolvimento modernas para garantir robustez, escalabilidade e fácil manutenção.
 
 ## Tabela de Conteúdos
 - [Arquitetura](#arquitetura)
@@ -40,7 +40,7 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 
 ## Tecnologias
 
-- **Backend**: PHP, Laravel, Repository Pattern, SOLID Principles
+- **Backend**: PHP, Laravel, PSR, Repository Pattern, SOLID Principles
 - **Frontend**: React.js, SOLID Principles
 - **Banco de Dados**: MySQL, SQLite
 - **Testes**: PHPUnit, Mockery
