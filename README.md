@@ -179,6 +179,8 @@ Content-Type: application/json
 - `docker-compose.yml`:  Dockerfile do projeto e o MySQL 8.
 - `phpunit.xml`: Configurações do PHPUnit.
 
+Veja:
+
 ![Estrutura backend](https://github.com/user-attachments/assets/bd010654-3d2b-4bbb-b933-49b7b84d1b0c)
 
 ### Frontend
@@ -194,6 +196,8 @@ Content-Type: application/json
 - `src/`: Contém todos os componentes React.
 - `src/components`: Contém os componentes Modal, UsuarioManager, TagManager e PostManager.
 - `src/services`: Contém os serviços UsuarioService, TagService e PostService.
+
+Veja:
 
   ![Estrutura frontend](https://github.com/user-attachments/assets/edcb1573-def7-4ad5-b771-38e10725d687)
 
