@@ -19,12 +19,12 @@ services:
       "
   frontend:
     build:
-      context: ./frontend_react
+      context: .././frontend_react
     container_name: frontend-react
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend_react:/usr/src/app
+      - .././frontend_react:/usr/src/app
     networks:
       - app-network
     command: >
