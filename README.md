@@ -73,40 +73,46 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 	```bash
     docker-compose up -d --build
 
-5. Acesse o contêiner da aplicação e configure o ambiente:
+5. Acesse o contêiner da aplicação:
    ```bash
    docker exec -it laravel-app bash
+
+6. Configure o ambiente da aplicação:
+   ```bash
    php artisan migrate --force
+
+7. Saia do ambiente da aplicação:
+   ```bash
    exit
    
-6. A API estará disponível em:
+8. A API estará disponível em:
 	```bash
     http://localhost:8000
 
  ![Tela app up](https://github.com/user-attachments/assets/9332d2fa-ee3e-4d1f-89b8-4a3b9fb8e1b7)
 
    
-7. A documentação estará em:
+9. A documentação estará em:
 	```bash
     http://localhost:8000/api/documentation
 
 ![Documentação](https://github.com/user-attachments/assets/69eafd2e-43f0-45a1-b666-0e86c49575bd)
 
 
-8. Navegue até o diretório do frontend:
+10. Navegue até o diretório do frontend:
     ```bash
     cd ..
     cd frontend_react
 
-9. Instale as dependências do React:
+11. Instale as dependências do React:
 	```bash
     npm install
    
-10. Inicie o servidor React:
+12. Inicie o servidor React:
 	```bash
     npm start
    
-11. O frontend estará disponível em:
+13. O frontend estará disponível em:
 	```bash
     http://localhost:3000
 
