@@ -29,14 +29,13 @@ services:
       - app-network
 
   frontend:
-    image: node:alpine
+    image: node:18.15.0
     container_name: frontend-container
     working_dir: /var/www/frontend_react
     volumes:
       - ./frontend_react:/var/www/frontend_react
     command: >
       /bin/bash -c "
-      rm -rf node_modules &&
       npm install &&
       npm start
       "
