@@ -10,7 +10,28 @@ services:
       - .:/var/www
     networks:
       - app-network
-    command: php artisan serve --host=0.0.0.0 --port=8000  # Adicionado para iniciar o servidor Laravel automaticamente  
+    command: >
+      sh -c "
+      composer install &&
+      until mysqladmin ping -h mysql --silent; do echo 'Aguardando MySQL...'; sleep 5; done &&
+      php artisan migrate --force &&
+      php artisan serve --host=0.0.0.0 --port=8000
+      "
+  frontend:
+    build:
+      context: ./frontend_react
+    container_name: frontend-react
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend_react:/usr/src/app
+    networks:
+      - app-network
+    command: >
+      sh -c "
+      npm install &&
+      npm start
+      " 
   mysql:
     image: mysql:8.0
     container_name: mysql-container
