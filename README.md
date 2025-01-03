@@ -105,7 +105,27 @@ Agora o projeto estará rodando em localhost:8000 para o backend e localhost:300
 
 ## Uso
 
-adicionar telas da interface gráfica
+Tela inicial:
+
+![Tela principal](https://github.com/user-attachments/assets/9bdabe80-80e9-444e-a14b-9f189390b9ee)
+
+Tela cadastro de usuário:
+
+![Tela cadastro usuário](https://github.com/user-attachments/assets/c9628b1e-c990-48f5-ae2d-e80b7d1ca05b)
+
+Tela edição de usuário:
+
+![Tela edição usuário](https://github.com/user-attachments/assets/38b82a3a-76cf-4c38-948d-24caa5f8bd72)
+
+Tela cadastro de post:
+
+![Tela cadastro post](https://github.com/user-attachments/assets/afea2c43-a4b3-43c2-aee6-c4b8a503ffc2)
+
+Tela edição de post:
+
+![Tela edição posts](https://github.com/user-attachments/assets/4a2e27ec-81f1-4d75-b1cc-4a5c1868001c)
+
+
 
 ## Detalhes
 
