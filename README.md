@@ -1,5 +1,7 @@
 # Protótipo de Blog e Rede Social Digital
 
+![Tela leitura usuários e tags](https://github.com/user-attachments/assets/0deb3f84-c0d8-4436-8c4b-42b9e4665cc7)
+
 Este projeto é uma aplicação que gerencia Usuários, Tags e Posts.
 
 Nela pode-se realizar operações CRUD de Usuários, Tags e Posts.
