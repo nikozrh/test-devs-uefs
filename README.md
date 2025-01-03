@@ -15,7 +15,7 @@ Ambos seguindo boas práticas de desenvolvimento modernas para garantir robustez
 ## Tabela de Conteúdos
 - [Arquitetura](#arquitetura)
 - [Tecnologias](#tecnologias)
-- [Instalação](#instalacao)
+- [Instalação](#instalação)
 - [Uso](#uso)
 - [API Backend](#backend)
 - [Frontend](#frontend)
