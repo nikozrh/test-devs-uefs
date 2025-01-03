@@ -66,23 +66,17 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 	```bash
     docker compose up -d --build
 
-A API estará disponível em:
-	```bash
-    http://localhost:8000
+A API estará disponível em: http://localhost:8000
 
  ![Tela app up](https://github.com/user-attachments/assets/9332d2fa-ee3e-4d1f-89b8-4a3b9fb8e1b7)
 
    
-A documentação estará em:
-	```bash
-    http://localhost:8000/api/documentation
+A documentação estará em: http://localhost:8000/api/documentation
 
 ![Documentação](https://github.com/user-attachments/assets/69eafd2e-43f0-45a1-b666-0e86c49575bd)
 
 
-O frontend estará disponível em:
-	```bash
-    http://localhost:3000
+O frontend estará disponível em: http://localhost:3000
 
  ![Tela principal](https://github.com/user-attachments/assets/fdec3a3d-f1c6-41d3-b55b-d960181d9cc5)
 
