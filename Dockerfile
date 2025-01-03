@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.3-apache-slim
 
 # Instalar dependências e o driver do MySQL/MariaDB
 RUN apt-get update && apt-get install -y \
