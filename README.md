@@ -64,49 +64,45 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 2. Navegue até o diretório da API:
 	```bash
     cd api_rede_social
-
-3. Instale as dependências:
-   	```bash
-    composer install
     
-4. Suba os contêineres Docker:
+3. Suba os contêineres Docker:
 	```bash
     docker-compose up -d --build
 
-5. Acesse o contêiner da aplicação e configure o ambiente:
+4. Acesse o contêiner da aplicação e configure o ambiente:
    ```bash
    docker exec -it laravel-app bash
    php artisan migrate --force
    exit
    
-6. A API estará disponível em:
+5. A API estará disponível em:
 	```bash
     http://localhost:8000
 
  ![Tela app up](https://github.com/user-attachments/assets/9332d2fa-ee3e-4d1f-89b8-4a3b9fb8e1b7)
 
    
-7. A documentação estará em:
+6. A documentação estará em:
 	```bash
     http://localhost:8000/api/documentation
 
 ![Documentação](https://github.com/user-attachments/assets/69eafd2e-43f0-45a1-b666-0e86c49575bd)
 
 
-8. Navegue até o diretório do frontend:
+7. Navegue até o diretório do frontend:
     ```bash
     cd ..
     cd frontend_react
 
-9. Instale as dependências do React:
+8. Instale as dependências do React:
 	```bash
     npm install
    
-10. Inicie o servidor React:
+9. Inicie o servidor React:
 	```bash
     npm start
    
-11. O frontend estará disponível em:
+10. O frontend estará disponível em:
 	```bash
     http://localhost:3000
 
