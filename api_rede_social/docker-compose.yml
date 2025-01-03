@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile  # Caminho para o seu Dockerfile
+      dockerfile: .././api_rede_social/Dockerfile
     container_name: laravel-app
     ports:
       - "8000:8000"
