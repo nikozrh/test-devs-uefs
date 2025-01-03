@@ -62,7 +62,7 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 
 2. Navegue até o diretório da API:
 	```bash
-    cd Blog-e-Rede-Social-Digital/api_rede_social
+    cd Blog-e-Rede-Social-Digital
 
 3. Instale as dependências:
 	```bash
