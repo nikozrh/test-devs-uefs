@@ -81,8 +81,6 @@ O frontend estará disponível em: http://localhost:3000
  ![Tela principal](https://github.com/user-attachments/assets/fdec3a3d-f1c6-41d3-b55b-d960181d9cc5)
 
 
-Agora o projeto estará rodando em localhost:8000 para o backend e localhost:3000 para o frontend.
-
 É natural que leve alguns segundos para que os serviços estejam completamente prontos, mesmo depois de os contêineres terem sido iniciados.
 
 ## Uso
