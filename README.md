@@ -71,7 +71,7 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
     
 4. Suba os contêineres Docker:
 	```bash
-    docker compose up --build
+    docker-compose up -d --build
 
 5. Acesse o contêiner da aplicação e configure o ambiente:
    ```bash
