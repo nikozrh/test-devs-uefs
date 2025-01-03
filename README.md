@@ -148,6 +148,7 @@ As requisições à API são feitas por meio de localhost:8000/api
 Exemplo de requisição para criar um novo usuário:
 
 POST /api/usuarios
+
 Content-Type: application/json
 
 ![Tela POST Usuario](https://github.com/user-attachments/assets/2a348d6d-3030-4787-92fd-ba63a193da65)
