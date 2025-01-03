@@ -16,7 +16,7 @@ services:
     entrypoint: /bin/bash -c "chmod +x /wait-for-it.sh && /wait-for-it.sh mysql && composer install && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
 
   mysql:
-    image: mysql:8.0
+    image: mysql:8.0.33-oracle
     container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -29,7 +29,7 @@ services:
       - app-network
 
   frontend:
-    image: node:18.15.0
+    image: node:alpine
     container_name: frontend-container
     working_dir: /var/www/frontend_react
     volumes:
