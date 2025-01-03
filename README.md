@@ -58,8 +58,8 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/SeuUsuario/seu-repositorio.git
-   cd seu-repositorio
+   git clone https://github.com/JoabioVilela/Blog-e-Rede-Social-Digital.git
+   cd Blog-e-Rede-Social-Digital
 
 2. Navegue até o diretório da API:
 	```bash
@@ -79,10 +79,16 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 5. A API estará disponível em:
 	```bash
     http://localhost:8000
+
+ ![Tela app up](https://github.com/user-attachments/assets/9332d2fa-ee3e-4d1f-89b8-4a3b9fb8e1b7)
+
    
 6. A documentação estará em:
 	```bash
     http://localhost:8000/api/documentation
+
+![Documentação](https://github.com/user-attachments/assets/69eafd2e-43f0-45a1-b666-0e86c49575bd)
+
 
 7. Navegue até o diretório do frontend:
     ```bash
@@ -100,6 +106,9 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 10. O frontend estará disponível em:
 	```bash
     http://localhost:3000
+
+ ![Tela principal](https://github.com/user-attachments/assets/fdec3a3d-f1c6-41d3-b55b-d960181d9cc5)
+
 
 Agora o projeto estará rodando em localhost:8000 para o backend e localhost:3000 para o frontend.
 
