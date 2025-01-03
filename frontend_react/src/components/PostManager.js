@@ -140,11 +140,7 @@ function PostManager() {
       setEditingPost(null);
       setNewPost({ title: '', content: '', usuario_id: '', tags: [] });
       setShowModal(true);
-      }}
-      disabled={usuarios.length === 0 || tags.length === 0}
-      >
-        Adicionar Novo Post
-        </button>
+      }}>Adicionar Novo Post</button>
       <br></br>
 
       <Modal show={!!editingPost || showModal } onClose={() => {
