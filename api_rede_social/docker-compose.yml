@@ -13,27 +13,10 @@ services:
     command: >
       sh -c "
       composer install &&
-      until mysqladmin ping -h mysql --silent; do echo 'Aguardando MySQL...'; sleep 5; done &&
+      until mysqladmin ping -h "localhost" --silent; do echo 'Aguardando MySQL...'; sleep 5; done &&
       php artisan migrate --force &&
       php artisan serve --host=0.0.0.0 --port=8000
       "
-  
-  frontend:
-    build:
-      context: .././frontend_react  # Caminho para o diretório frontend_react
-      dockerfile: Dockerfile
-    container_name: frontend-react
-    ports:
-      - "3000:3000"  # Expor a porta 3000 para acessar o frontend React
-    volumes:
-      - .././frontend_react:/usr/src/app  # Sincroniza o código local com o contêiner
-    networks:
-      - app-network
-    command: >
-      sh -c "
-      npm install &&
-      npm start
-      "  # Instalar dependências e rodar o servidor de desenvolvimento React
   
   mysql:
     image: mysql:8.0
