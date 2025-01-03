@@ -140,7 +140,16 @@ function PostManager() {
       setEditingPost(null);
       setNewPost({ title: '', content: '', usuario_id: '', tags: [] });
       setShowModal(true);
-      }}>Adicionar Novo Post</button>
+      }}
+      disabled={usuarios.length === 0 || tags.length === 0}
+      style={{
+        opacity: usuarios.length === 0 || tags.length === 0 ? 0.5 : 1,
+        cursor: usuarios.length === 0 || tags.length === 0 ? 'not-allowed' : 'pointer',
+      }}
+    >Adicionar Novo Post</button>
+      <p style={{ color: 'red', display: usuarios.length === 0 || tags.length === 0 ? 'block' : 'none' }}>
+        Botão será habilitador após cadastrar usuário(s) e tag(s). Pressione F5.
+      </p>
       <br></br>
 
       <Modal show={!!editingPost || showModal } onClose={() => {
@@ -171,6 +180,7 @@ function PostManager() {
               </option>
             ))}
           </select>
+          Selecione tag(s):
           <select
             multiple
             value={newPost.tags}
