@@ -11,13 +11,7 @@ services:
       - .:/var/www
     networks:
       - app-network
-    command: >
-      sh -c "
-      composer install &&
-      until mysqladmin ping -h "localhost" --silent; do echo 'Aguardando MySQL...'; sleep 5; done &&
-      php artisan migrate --force &&
-      php artisan serve --host=0.0.0.0 --port=8000
-      "
+    command: php artisan serve --host=0.0.0.0 --port=8000 
 
   mysql:
     image: mysql:8.0
