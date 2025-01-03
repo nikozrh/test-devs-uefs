@@ -143,12 +143,13 @@ Tela exibição de posts:
 
 ### Backend
 
-As requisições à API são feitas por meio de localhost:8000/api.
+As requisições à API são feitas por meio de localhost:8000/api
 
 Exemplo de requisição para criar um novo usuário:
 
 POST /api/usuarios
 Content-Type: application/json
+```bash
 {
   "name": "Joábio Vilela",
   "email": "joabio.vilela@gmail.com",
