@@ -198,7 +198,7 @@ Para rodar os testes:
 	```bash
 	php artisan test
 
-![Testes Unitários](https://github.com/user-attachments/assets/c5f1372e-8450-4d06-980e-81ce10fdae11)
+![Testes Unitários](https://github.com/user-attachments/assets/cb4ee26b-0257-4d86-9c20-e163937b9a97)
  
 
 ## Licença
