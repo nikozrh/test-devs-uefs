@@ -17,21 +17,23 @@ services:
       php artisan migrate --force &&
       php artisan serve --host=0.0.0.0 --port=8000
       "
+  
   frontend:
     build:
-      context: .././frontend_react
+      context: ./frontend_react  # Caminho para o diretório frontend_react
     container_name: frontend-react
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Expor a porta 3000 para acessar o frontend React
     volumes:
-      - .././frontend_react:/usr/src/app
+      - ./frontend_react:/usr/src/app  # Sincroniza o código local com o contêiner
     networks:
       - app-network
     command: >
       sh -c "
       npm install &&
       npm start
-      " 
+      "
+  
   mysql:
     image: mysql:8.0
     container_name: mysql-container
