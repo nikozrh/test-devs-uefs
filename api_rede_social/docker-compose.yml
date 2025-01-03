@@ -1,4 +1,5 @@
 services:
+
   app:
     build:
       context: .
@@ -10,7 +11,14 @@ services:
       - .:/var/www
     networks:
       - app-network
-    command: php artisan serve --host=0.0.0.0 --port=8000 
+    command: >
+      sh -c "
+      composer install &&
+      until mysqladmin ping -h "localhost" --silent; do echo 'Aguardando MySQL...'; sleep 5; done &&
+      php artisan migrate --force &&
+      php artisan serve --host=0.0.0.0 --port=8000
+      "
+
   mysql:
     image: mysql:8.0
     container_name: mysql-container
@@ -23,6 +31,7 @@ services:
       - "3306:3306"
     networks:
       - app-network
+
 networks:
   app-network:
     driver: bridge
