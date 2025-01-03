@@ -125,6 +125,9 @@ Tela edição de post:
 
 ![Tela edição posts](https://github.com/user-attachments/assets/4a2e27ec-81f1-4d75-b1cc-4a5c1868001c)
 
+Tela exibição de posts:
+
+![Tela leitura posts](https://github.com/user-attachments/assets/77a45d00-d7cf-4c84-8122-99dc5ff914ea)
 
 
 ## Detalhes
