@@ -21,6 +21,7 @@ services:
   frontend:
     build:
       context: .././frontend_react  # Caminho para o diretório frontend_react
+      dockerfile: Dockerfile
     container_name: frontend-react
     ports:
       - "3000:3000"  # Expor a porta 3000 para acessar o frontend React
