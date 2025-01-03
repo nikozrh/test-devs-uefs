@@ -180,7 +180,6 @@ function PostManager() {
               </option>
             ))}
           </select>
-          Selecione tag(s):
           <select
             multiple
             value={newPost.tags}
@@ -189,6 +188,9 @@ function PostManager() {
               tags: Array.from(e.target.selectedOptions, option => option.value),
             })}
           >
+            <option disabled value="">
+              Selecione tag(s):
+            </option>
             {tags.map(tag => (
               <option key={tag.id} value={tag.id}>
                 {tag.name}
