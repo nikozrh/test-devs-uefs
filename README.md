@@ -76,7 +76,7 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 5. Acesse o contêiner da aplicação e configure o ambiente:
    ```bash
    docker exec -it laravel-app bash
-   php artisan migrate
+   php artisan migrate --force
    exit
    
 6. A API estará disponível em:
