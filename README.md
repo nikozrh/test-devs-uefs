@@ -51,8 +51,6 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 
 ### Pré-requisitos
 - Docker e Docker Compose instalados
-- Node.js e npm instalados (para o frontend React)
-- Composer
 
 ### Passos
 
