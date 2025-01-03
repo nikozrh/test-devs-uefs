@@ -198,6 +198,9 @@ Para rodar os testes:
 	```bash
 	php artisan test
 
+![Testes Unitários](https://github.com/user-attachments/assets/c5f1372e-8450-4d06-980e-81ce10fdae11)
+ 
+
 ## Licença
 
 Este projeto está licenciado sob a MIT License.
