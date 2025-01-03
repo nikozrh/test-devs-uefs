@@ -1,13 +1,13 @@
 services:
   app:
     build:
-      context: ./api_rede_social
+      context: .
       dockerfile: Dockerfile
     container_name: laravel-app
     ports:
       - "8000:8000"
     volumes:
-      - ./api_rede_social:/var/www
+      - .:/var/www
     networks:
       - app-network
     command: >
