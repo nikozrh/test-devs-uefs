@@ -1,0 +1,1073 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Protótipo de Rede Social",
+        "description": "API protótipo de rede social.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Listar todos os posts com suas tags.",
+                "operationId": "8c292c8777126dc6d3efb05793ca8517",
+                "responses": {
+                    "200": {
+                        "description": "Lista de posts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID do post",
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "usuario_id": {
+                                                "description": "ID do usuário",
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "description": "Título do post",
+                                                "type": "string",
+                                                "example": "Meu primeiro post"
+                                            },
+                                            "content": {
+                                                "description": "Conteúdo do post",
+                                                "type": "string",
+                                                "example": "Conteúdo do meu post."
+                                            },
+                                            "tags": {
+                                                "description": "IDs das tags associadas ao post",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Cadastrar post de um usuário com tags.",
+                "operationId": "e65ec23954b56b8ece120e19fd94fe87",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "usuario_id",
+                                    "title",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "usuario_id": {
+                                        "description": "ID do usuário",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "description": "Título do post",
+                                        "type": "string",
+                                        "example": "Meu primeiro post"
+                                    },
+                                    "content": {
+                                        "description": "Conteúdo do post",
+                                        "type": "string",
+                                        "example": "Conteúdo do meu post."
+                                    },
+                                    "tags": {
+                                        "description": "IDs das tags associadas ao post, começando do 1",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "example": 6
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Post criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do post",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "usuario_id": {
+                                            "description": "ID do usuário",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "description": "Título do post",
+                                            "type": "string",
+                                            "example": "Meu primeiro post"
+                                        },
+                                        "content": {
+                                            "description": "Conteúdo do post",
+                                            "type": "string",
+                                            "example": "Conteúdo do meu post."
+                                        },
+                                        "tags": {
+                                            "description": "IDs das tags associadas ao post",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer",
+                                                "example": 2
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Dados inválidos ou faltando parâmetros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erro ao criar o post."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/usuarios": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Listar todos os usuários.",
+                "operationId": "3ec8bd4e29c5f17719542f5bd741e3f8",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID do usuário",
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "description": "Nome do usuário",
+                                                "type": "string",
+                                                "example": "João"
+                                            },
+                                            "email": {
+                                                "description": "Email do usuário",
+                                                "type": "string",
+                                                "example": "joao@exemplo.com"
+                                            },
+                                            "password": {
+                                                "description": "ID do usuário",
+                                                "type": "string",
+                                                "example": "xxsenha123"
+                                            },
+                                            "created_at": {
+                                                "description": "momento em que o registro foi criado no banco de dados.",
+                                                "type": "string",
+                                                "example": "2025-01-02T20:00:39.000000Z"
+                                            },
+                                            "updated_at": {
+                                                "description": "momento em que o registro foi atualizado pela última vez",
+                                                "type": "string",
+                                                "example": "2025-01-02T20:00:39.000000Z"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Cadastrar um novo usuário.",
+                "operationId": "fdccd67c0494d38b46d588d3a1a0880c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Nome do usuário",
+                                        "type": "string",
+                                        "example": "João"
+                                    },
+                                    "email": {
+                                        "description": "Email do usuário",
+                                        "type": "string",
+                                        "example": "joao@exemplo.com"
+                                    },
+                                    "password": {
+                                        "description": "Senha do usuário",
+                                        "type": "string",
+                                        "example": "senha123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do usuário",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "description": "Nome do usuário",
+                                            "type": "string",
+                                            "example": "João"
+                                        },
+                                        "email": {
+                                            "description": "Email do usuário",
+                                            "type": "string",
+                                            "example": "joao@exemplo.com"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Dados inválidos ou faltando parâmetros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erro ao criar o usuário."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Exibir post específico por ID.",
+                "operationId": "380ebd6ea1942a3eff9d4719a866e457",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do post",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "usuario_id": {
+                                            "description": "ID do usuário",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "description": "Título do post",
+                                            "type": "string",
+                                            "example": "Meu primeiro post"
+                                        },
+                                        "content": {
+                                            "description": "Conteúdo do post",
+                                            "type": "string",
+                                            "example": "Conteúdo do meu post."
+                                        },
+                                        "tags": {
+                                            "description": "IDs das tags associadas ao post",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer",
+                                                "example": 2
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Post não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Atualizar post específico.",
+                "operationId": "17dddea8ac2c09e99990514c116ef5b0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "usuario_id",
+                                    "title",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "usuario_id": {
+                                        "description": "ID do usuário",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "description": "Título do post",
+                                        "type": "string",
+                                        "example": "Meu primeiro post"
+                                    },
+                                    "content": {
+                                        "description": "Conteúdo do post",
+                                        "type": "string",
+                                        "example": "Conteúdo do meu post."
+                                    },
+                                    "tags": {
+                                        "description": "IDs das tags associadas ao post, começando do 1",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "example": 6
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Post atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do post",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "usuario_id": {
+                                            "description": "ID do usuário",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "description": "Título do post",
+                                            "type": "string",
+                                            "example": "Meu primeiro post"
+                                        },
+                                        "content": {
+                                            "description": "Conteúdo do post",
+                                            "type": "string",
+                                            "example": "Conteúdo do meu post."
+                                        },
+                                        "tags": {
+                                            "description": "IDs das tags associadas ao post",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "integer",
+                                                "example": 2
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Dados inválidos ou faltando parâmetros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erro ao atualizar o post."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Remover post específico.",
+                "operationId": "f43d1f0d1b0f61d306c35cef1ecbf7e2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Post deletado com sucesso"
+                    },
+                    "404": {
+                        "description": "Post não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Post não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Listar todas as tags.",
+                "operationId": "e9df4702b5217bc5d1b56361b7d9ef68",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tags retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID da tag",
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "description": "Nome da tag",
+                                                "type": "string",
+                                                "example": "Tecnologia"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Cadastrar uma nova tag.",
+                "operationId": "5cfcf67f1f41d16305affab21cadfc99",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Nome da tag",
+                                        "type": "string",
+                                        "example": "Tecnologia"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tag criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID da tag",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "description": "Nome da tag",
+                                            "type": "string",
+                                            "example": "Tecnologia"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Dados inválidos ou faltando parâmetros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erro ao criar a tag."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tags/{id}": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Exibir os dados de uma tag específica.",
+                "operationId": "73e65c8d6ae972fe586a6eda262458e5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da tag",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tag encontrada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID da tag",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "description": "Nome da tag",
+                                            "type": "string",
+                                            "example": "Tecnologia"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tag não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Tag não encontrada."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Atualizar os dados de uma tag específica.",
+                "operationId": "6143ac142a8bb3497893ccff88fb7ce7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da tag",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Nome da tag",
+                                        "type": "string",
+                                        "example": "Tecnologia"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tag atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID da tag",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "description": "Nome da tag",
+                                            "type": "string",
+                                            "example": "Tecnologia"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Dados inválidos ou faltando parâmetros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erro ao atualizar a tag."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Deletar uma tag específica.",
+                "operationId": "3b04880727363a917f1c9ea1b729e6de",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da tag",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Tag deletada com sucesso"
+                    },
+                    "404": {
+                        "description": "Tag não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Tag não encontrada."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Exibir os dados de um usuário específico.",
+                "operationId": "12a45471173c6151fc4d28ae3f3cc8c2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário encontrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do usuário",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "description": "Nome do usuário",
+                                            "type": "string",
+                                            "example": "João"
+                                        },
+                                        "email": {
+                                            "description": "Email do usuário",
+                                            "type": "string",
+                                            "example": "joao@exemplo.com"
+                                        },
+                                        "password": {
+                                            "description": "ID do usuário",
+                                            "type": "string",
+                                            "example": "xxsenha123"
+                                        },
+                                        "created_at": {
+                                            "description": "momento em que o registro foi criado no banco de dados.",
+                                            "type": "string",
+                                            "example": "2025-01-02T20:00:39.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "description": "momento em que o registro foi atualizado pela última vez",
+                                            "type": "string",
+                                            "example": "2025-01-02T20:00:39.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Usuário não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Atualizar os dados de um usuário específico.",
+                "operationId": "356f4dacfa0a376c973f916ac401f8ef",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Nome do usuário",
+                                        "type": "string",
+                                        "example": "João"
+                                    },
+                                    "email": {
+                                        "description": "Email do usuário",
+                                        "type": "string",
+                                        "example": "joao@exemplo.com"
+                                    },
+                                    "password": {
+                                        "description": "Senha do usuário",
+                                        "type": "string",
+                                        "example": "senha123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do usuário",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "description": "Nome do usuário",
+                                            "type": "string",
+                                            "example": "João"
+                                        },
+                                        "email": {
+                                            "description": "Email do usuário",
+                                            "type": "string",
+                                            "example": "joao@exemplo.com"
+                                        },
+                                        "password": {
+                                            "description": "ID do usuário",
+                                            "type": "string",
+                                            "example": "xxsenha123"
+                                        },
+                                        "created_at": {
+                                            "description": "momento em que o registro foi criado no banco de dados.",
+                                            "type": "string",
+                                            "example": "2025-01-02T20:00:39.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "description": "momento em que o registro foi atualizado pela última vez",
+                                            "type": "string",
+                                            "example": "2025-01-02T20:00:39.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Dados inválidos ou faltando parâmetros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erro ao atualizar o usuário."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "ID inválido. Usuário não encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "O usuário não existe."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Deletar um usuário específico.",
+                "operationId": "067bf89c772e70e9b85f1fbe643e7cc8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Usuário deletado com sucesso"
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Usuário não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Posts",
+            "description": "Operações relacionadas a posts."
+        },
+        {
+            "name": "Tags",
+            "description": "Operações relacionadas a tags."
+        },
+        {
+            "name": "Usuários",
+            "description": "Operações relacionadas a usuários."
+        }
+    ]
+}

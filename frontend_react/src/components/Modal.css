@@ -1,0 +1,53 @@
+/* Modal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Fundo escuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Garante que o modal fique sobre outros elementos */
+}
+
+.modal-content {
+  position: relative; /* Define o contêiner como referência para posicionamento absoluto */
+  width: 400px; /* Ajuste conforme necessário */
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+}
+
+
+.close-button-top {
+  background: #f44336; /* Vermelho para o botão */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px; /* Tamanho da fonte */
+  float: right;
+}
+
+.close-button-top:hover {
+  background: #d32f2f; /* Cor mais escura ao passar o mouse */
+}
+
+.save-button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.save-button:hover {
+  background: #388e3c;
+}
