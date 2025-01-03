@@ -50,7 +50,7 @@ A comunicação entre frontend e backend é realizada por meio de API RESTful.
 ## Instalação
 
 ### Pré-requisitos
-- Docker e Docker Compose instalados
+- Docker e Docker Compose
 
 ### Passos
 
