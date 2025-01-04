@@ -103,7 +103,8 @@ function UsuarioManager() {
     </tr>
   </thead>
   <tbody>
-    {usuarios.map(usuario => (
+    { usuarios.length > 0 ? (
+      usuarios.map(usuario => (
       <tr key={usuario.id}>
         <td>{usuario.name}</td>
         <td>{usuario.email}</td>
@@ -122,7 +123,12 @@ function UsuarioManager() {
           </button>
         </td>
       </tr>
-    ))}
+    )
+    )
+    ) : (
+      <p>Nenhum usuário encontrado.</p>
+    )
+    }
   </tbody>
 </table>
 <button onClick={() => {

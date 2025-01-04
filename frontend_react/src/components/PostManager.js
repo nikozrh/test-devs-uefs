@@ -106,7 +106,7 @@ function PostManager() {
           </tr>
         </thead>
         <tbody>
-          {posts.map(post => (
+          { posts.length > 0 ? ( posts.map(post => (
             <tr key={post.id}>
               <td>{post.title}</td>
               <td>{post.content}</td>
@@ -141,7 +141,9 @@ function PostManager() {
                 </button>
               </td>
             </tr>
-          ))}
+          ))) : (
+            <p>Nenhum post encontrado.</p>
+          )}
         </tbody>
       </table>
       <button onClick={() => {

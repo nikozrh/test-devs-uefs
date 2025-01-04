@@ -72,7 +72,7 @@ function TagManager() {
     </tr>
   </thead>
   <tbody>
-    {tags.map(tag => (
+    { tags.length > 0 ? ( tags.map(tag => (
       <tr key={tag.id}>
         <td>{tag.name}</td>
         <td className="table-actions">
@@ -90,7 +90,9 @@ function TagManager() {
           </button>
         </td>
       </tr>
-    ))}
+    ))) : (
+      <p>Nenhuma tag encontrada.</p>
+    )}
   </tbody>
 </table>
 <button onClick={() => {
