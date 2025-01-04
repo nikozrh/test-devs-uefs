@@ -2,12 +2,25 @@ import React, { useState, useEffect } from 'react';
 import UsuarioService from '../services/UsuarioService';
 import Modal from './Modal';
 
+
+
 function UsuarioManager() {
   const [usuarios, setUsuarios] = useState([]);
   const [editingUsuario, setEditingUsuario] = useState(null);
   const [newUsuario, setNewUsuario] = useState({ name: '', email: '', password: '' });
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState('');
+
+  function showTemporaryMessage(message, duration = 3000) {
+    const messageDiv = document.getElementById('temporary-message');
+    messageDiv.textContent = message; // Define o texto da mensagem
+    messageDiv.style.display = 'block'; // Exibe o elemento
+    
+    // Remove a mensagem após o tempo especificado
+    setTimeout(() => {
+        messageDiv.style.display = 'none'; // Esconde o elemento
+    }, duration);
+  }
 
   useEffect(() => {
     UsuarioService.getAll()
@@ -19,7 +32,10 @@ function UsuarioManager() {
           setUsuarios([]);
         }
       })
-      .catch(error => console.error('Error fetching usuários:', error));
+      .catch(error => {
+        console.error('Error fetching usuários:', error)
+        showTemporaryMessage('Ops! Algo deu errado com a API. Tente novamente mais tarde.', 5000);
+      });
   }, []);
 
   useEffect(() => {
@@ -65,6 +81,19 @@ function UsuarioManager() {
 
   return (
     <div>
+      <div id="temporary-message" style={{
+        display: 'none',
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        backgroundColor: '#f8d7da',
+        color: '#721c24',
+        padding: '10px',
+        border: '1px solid #f5c6cb',
+        borderRadius: '5px',
+        zIndex: 1000,
+    }}></div>
+
       <table className="table">
   <thead>
     <tr>
