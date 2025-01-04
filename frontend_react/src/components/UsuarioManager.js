@@ -84,8 +84,8 @@ function UsuarioManager() {
       <div id="temporary-message" style={{
         display: 'none',
         position: 'fixed',
-        top: '20px',
-        right: '20px',
+        top: '40px',
+        right: '30px',
         backgroundColor: '#f8d7da',
         color: '#721c24',
         padding: '10px',
