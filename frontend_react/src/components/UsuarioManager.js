@@ -11,7 +11,14 @@ function UsuarioManager() {
 
   useEffect(() => {
     UsuarioService.getAll()
-      .then(data => setUsuarios(data))
+      .then(data => {
+        if (data) {
+          setUsuarios(data);
+        } else {
+          console.log('Nenhum dado recebido da API');
+          setUsuarios([]);
+        }
+      })
       .catch(error => console.error('Error fetching usuários:', error));
   }, []);
 

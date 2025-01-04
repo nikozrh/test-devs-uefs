@@ -11,7 +11,14 @@ function TagManager() {
 
   useEffect(() => {
     TagService.getAll()
-      .then(data => setTags(data))
+      .then(data => {
+        if (data) {
+          setTags(data);
+        } else {
+          console.log('Nenhum dado recebido da API');
+          setTags([]); // Evita erro caso a API não retorne nada
+        }
+      })
       .catch(error => console.error('Error fetching tags:', error));
   }, []);
 

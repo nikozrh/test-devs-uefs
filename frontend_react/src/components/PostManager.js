@@ -14,18 +14,39 @@ function PostManager() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Carregar posts, usuários e tags
-    PostService.getAll()
-      .then(data => setPosts(data))
-      .catch(error => setError('Error fetching posts:', error.message));
-
-    UsuarioService.getAll()
-      .then(data => setUsuarios(data))
+      UsuarioService.getAll()
+      .then(data => {
+        if (data) {
+          setUsuarios(data);
+        } else {
+          console.log('Nenhum dado recebido da API');
+          setUsuarios([]);
+        }
+      })
       .catch(error => console.error('Error fetching usuários:', error));
 
     TagService.getAll()
-      .then(data => setTags(data))
+      .then(data => {
+        if (data) {
+          setTags(data);
+        } else {
+          console.log('Nenhum dado recebido da API');
+          setTags([]);
+        }
+      })
       .catch(error => console.error('Error fetching tags:', error));
+
+    PostService.getAll()
+    .then(data => {
+      if (data) {
+        setPosts(data);
+      } else {
+        console.log('Nenhum dado recebido da API');
+        setPosts([]);
+      }
+    })
+    .catch(error => setError('Error fetching posts:', error.message));
+
   }, []);
 
   useEffect(() => {
@@ -125,17 +146,38 @@ function PostManager() {
       </table>
       <button onClick={() => {
         // Carregar posts, usuários e tags
-      UsuarioService.getAll()
-        .then(data => setUsuarios(data))
+        UsuarioService.getAll()
+        .then(data => {
+          if (data) {
+            setUsuarios(data);
+          } else {
+            console.log('Nenhum dado recebido da API');
+            setUsuarios([]);
+          }
+        })
         .catch(error => console.error('Error fetching usuários:', error));
-
+  
       TagService.getAll()
-        .then(data => setTags(data))
+        .then(data => {
+          if (data) {
+            setTags(data);
+          } else {
+            console.log('Nenhum dado recebido da API');
+            setTags([]);
+          }
+        })
         .catch(error => console.error('Error fetching tags:', error));
-      
+  
       PostService.getAll()
-        .then(data => setPosts(data))
-        .catch(error => setError('Error fetching posts:', error.message));
+      .then(data => {
+        if (data) {
+          setPosts(data);
+        } else {
+          console.log('Nenhum dado recebido da API');
+          setPosts([]);
+        }
+      })
+      .catch(error => setError('Error fetching posts:', error.message));
           
       setEditingPost(null);
       setNewPost({ title: '', content: '', usuario_id: '', tags: [] });
