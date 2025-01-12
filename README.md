@@ -7,11 +7,13 @@ Esta é uma aplicação API desenvolvida com Laravel 11. Foram implementados os 
 ## Instalação via Docker
 ### No terminal Linux executar os passos a seguir:
 #### Iniciar o Container
-- docker-compose up -d
+- sudo docker-compose up -d
 #### Configurar o Banco de Dados
-- docker exec -it laravel_app bash
+- sudo docker exec -it laravel_app bash
 #### Configure as entidades na banco de dados
 - php artisan migrate
+### Popular entidade de usuários para teste da API
+- php artisan db:seed
 #### Testar a API
 - http://localhost:8000
 #### Documentação da API
