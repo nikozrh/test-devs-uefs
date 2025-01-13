@@ -4,18 +4,33 @@
 Esta é uma aplicação API desenvolvida com Laravel 11. Foram implementados os endpoinsts USUARIOS, POSTs e TAGs. Foi utilizado o banco de dados postgreSQL como repositório de dados para testar a aplicação.
 </p>
 
-## Instalação via Docker
-### No terminal Linux executar os passos a seguir:
-#### Iniciar o Container
+# Laravel com Docker
+
+Este projeto utiliza Docker para simplificar o ambiente de desenvolvimento.
+
+## Pré-requisitos
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+## Clone o repositório
+- git clone https://github.com/lefundes/test-devs-uefs.git
+- cd test-devs-uefs
+
+## Gerenciamento de dependências e Migrations
+- sudo docker-compose exec laravel composer install
+- sudo docker-compose exec laravel php artisan migrate
+
+## Iniciar o Container
 - sudo docker-compose up -d
-#### Configurar o Banco de Dados
+
+## Gerenciar API via Docker
 - sudo docker exec -it laravel_app bash
-#### Configure as entidades na banco de dados
-- php artisan migrate
-### Popular entidade de usuários para teste da API
+
+## Popular entidade de usuários para teste da API
 - php artisan db:seed
-#### Testar a API
+
+## Testar a API
 - http://localhost:8000
-#### Documentação da API
+## Documentação da API
 - http://localhost:8000/doc
 
