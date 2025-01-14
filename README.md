@@ -1,7 +1,7 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-Esta é uma aplicação API desenvolvida com Laravel 11. Foram implementados os endpoinsts USUARIOS, POSTs e TAGs. Foi utilizado o banco de dados postgreSQL como repositório de dados para testar a aplicação.
+Esta é uma aplicação API desenvolvida com Laravel 11. Foram implementados os endpoinsts USUARIOS, POSTs, TAGs, Login e Logout. Foi utilizado o banco de dados postgreSQL como repositório de dados para testar a aplicação.
 </p>
 
 # Laravel com Docker
