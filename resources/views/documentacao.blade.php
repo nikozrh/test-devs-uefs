@@ -84,29 +84,102 @@
                 <li><strong>PostgreSQL</strong>: Banco de dados utilizado para armazenar as informações.</li>
                 <li><strong>Insomnia</strong>: Ferramenta para testar e validar os endpoints da API.</li>
             </ul>
+            <p>A aplicação utiliza autenticação com JWT (JSON Web Token) por meio do laravel/sanctum.</p>
         </section>
         <!-- Iniciar os Containers -->
         <section id="instalacao">
-            <h2>Instalação via Docker</h2>
+            <h2>Instalação da aplicação</h2>
             <ol>
+                <li>Pré-requisitos
+                    <pre>
+                        <code>[Docker](https://www.docker.com/)</code>
+                        <code>[Docker Compose](https://docs.docker.com/compose/)</code>
+                    </pre>
+                </li>
+                <li>Clone o repositório
+                    <pre>
+                        <code>git clone https://github.com/lefundes/test-devs-uefs.git</code>
+                        <code>cd test-devs-uefs</code>
+                    </pre>
+                </li>
+                <li>Gerenciamento de dependências
+                    <pre><code>sudo docker-compose exec laravel composer install</code></pre>
+                </li>
+                <li>Excutar Migrations
+                    <pre><code>sudo docker-compose exec laravel php artisan migrate</code></pre>
+                </li>
                 <li>Iniciar o Container
-                    <pre><code>docker-compose up -d</code></pre>
+                    <pre><code>sudo docker-compose up -d</code></pre>
                 </li>
-                <li>Configurar o Banco de Dados:
-                    <pre><code>docker exec -it laravel_app bash</code></pre>
+                <li>Gerenciar API via Docker
+                    <pre><code>sudo docker exec -it laravel_app bash</code></pre>
                 </li>
-                <li>Configure as entidades na banco de dados:
-                    <pre><code>php artisan migrate</code></pre>
+                <li>Popular entidade de usuários para teste da API
+                    <pre><code>php artisan db:seed</code></pre>
                 </li>
-                <li>Testar a API:
+                <li>Testar a API
                     <pre><code>http://localhost:8000</code></pre>
+                </li>
+                <li>Documentação da API
+                    <pre><code>http://localhost:8000/doc</code></pre>
                 </li>
             </ol>
         </section>
         <!-- Endpoints -->
         <section id="endpoints">
             <h2>Endpoints</h2>
-            <p>A API suporta operações CRUD completas para Usuários, Posts e Tags. Abaixo estão os detalhes de cada grupo de rotas.</p>
+            <p>A API suporta operações CRUD completas para Usuários, Posts, Tags, Login e Logout. Abaixo estão os detalhes de cada grupo de rotas.</p>
+            <!-- Login/Logout -->
+            <section id="auth">
+                <h3>Autenticação</h3>
+                
+                <!-- Login -->
+                <h4>Login de Usuário</h4>
+                <p>Gera um token de autenticação para a sessão do usuário.</p>
+                <pre class="request"><code>POST /api/login
+            Content-Type: application/json
+
+            {
+                "email": "usuario@api.com.br",
+                "password": "senha123"
+            }</code></pre>
+                <h5>Resposta de Sucesso:</h5>
+                <pre class="response"><code>{
+                "token": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+                    "token_type": "bearer",
+                    "expires_in": null
+                }
+            }</code></pre>
+
+                <!-- Logout -->
+                <h4>Logout de Usuário</h4>
+                <p>Encerra a sessão de um usuário autenticado, revogando o token de acesso.</p>
+                <pre class="request"><code>POST /api/logout
+            Authorization: Bearer {seu_token_aqui}</code></pre>
+                <h5>Resposta de Sucesso:</h5>
+                <pre class="response"><code>{
+                "message": "Logout realizado com sucesso"
+            }</code></pre>
+                
+                <!-- Erros Comuns -->
+                <h4>Erros Comuns</h4>
+                <ul>
+                    <li>
+                        <strong>401 Unauthorized</strong>: Token inválido ou ausente.
+                        <pre class="error"><code>{
+                "message": "Não autenticado"
+            }</code></pre>
+                    </li>
+                    <li>
+                        <strong>422 Unprocessable Entity</strong>: Dados de login inválidos.
+                        <pre class="error"><code>{
+                "message": "Credenciais inválidas"
+            }</code></pre>
+                    </li>
+                </ul>
+            </section>
+
 
             <!-- Usuários -->
             <section id="usuarios">

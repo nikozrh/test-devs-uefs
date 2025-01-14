@@ -9,11 +9,11 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+
     /**
      * Retorna uma lista não paginada de usuários
      *
@@ -21,17 +21,15 @@ class UserController extends Controller
      * e a retorna como uma respota JSON.
      *
      * @return \Illuminate\Http\JsonResponse
-    */
+     */
     public function index() : JsonResponse
     {
-        // Recupera registros de usuários na entidade User
         $users = User::orderBy('name', 'ASC')->get();
 
-        // Retorna resposta em JSON dos registros de usuários recuperados
         return response()->json([
             'status' => true,
             'users' => $users
-        ], 201);
+        ], 200);
     }
 
     /**
@@ -40,52 +38,45 @@ class UserController extends Controller
      * Este método os detalhes do registro de um usuário específico usando o ID como chave de referência
      * e retorna as informações de detalhes como uma respota JSON.
      *
-     * @param \App\Models\User $user O objeto do usuário a ser exibido
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\JsonResponse
-    */    
+     */
     public function show(User $user) : JsonResponse
     {
-        // Retorna detalhes de um determinado usuário em formato JSON
         return response()->json([
             'status' => true,
-            'users' => $user
-        ], 201);
+            'user' => $user
+        ], 200);
     }
 
     /**
-     * Cria usuário com os dados fornecidos na requisição
+     * Cria um novo usuário
      *
-     * @param \App\Http\Requests\UserRequest $request O objeto de requesição contendo os dados do usuário
-     * a ser criado
+     * @param \App\Http\Requests\UserRequest $request
      * @return \Illuminate\Http\JsonResponse
-    */    
+     */
     public function store(UserRequest $request): JsonResponse
     {
-        // Iniciando a transação
         DB::beginTransaction();
 
-        try{
+        try {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password, ['rounds' => 12])    
+                'password' => Hash::make($request->password, ['rounds' => 12])
             ]);
 
-            // Confirma o commit do novo registro
             DB::commit();
 
-            // Retorna mensagem de erro
             return response()->json([
                 'status' => true,
                 'message' => 'Usuário cadastrado com sucesso!',
                 'user' => $user
             ], 201);
 
-        }catch (Exception $e){
-            // Operação não concluída
+        } catch (Exception $e) {
             DB::rollBack();
 
-            // Retorna mensagem de erro
             return response()->json([
                 'status' => false,
                 'message' => 'Erro ao inserir novo usuário!'
@@ -94,43 +85,34 @@ class UserController extends Controller
     }
 
     /**
-     * Atualiza os dados de um determinado usuário com base nos dados fornecidos na requisição
+     * Atualiza os dados de um determinado usuário
      *
-     * @param \App\Http\Requests\UserRequest $request O objeto de requesição contendo os dados do usuário
-     * a ser atualizado
-     * @param \App\Models\User $user O usuário a ser atualizado
+     * @param \App\Http\Requests\UserRequest $request
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\JsonResponse
-    */
+     */
     public function update(UserRequest $request, User $user): JsonResponse
     {
-
-        // Iniciar a transação
         DB::beginTransaction();
 
         try {
-
-            // Editar o registro no banco de dados
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password, ['rounds' => 12])    
+                'password' => Hash::make($request->password, ['rounds' => 12])
             ]);
 
-            // Operação é concluída com êxito
             DB::commit();
 
-            // Retorna os dados do usuário editado e uma mensagem de sucesso com status 200
             return response()->json([
                 'status' => true,
                 'user' => $user,
                 'message' => "Usuário atualizado com sucesso!",
             ], 200);
-        } catch (Exception $e) {
 
-            // Operação não é concluída com êxito
+        } catch (Exception $e) {
             DB::rollBack();
 
-            // Retorna uma mensagem de erro com status 400
             return response()->json([
                 'status' => false,
                 'message' => "Erro ao atualizar usuário!",
@@ -139,39 +121,33 @@ class UserController extends Controller
     }
 
     /**
-     * Delete de um determinado usuário no banco de dados
+     * Exclui um usuário
      *
-     * @param \App\Models\User $user O usuário a ser excluído
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\JsonResponse
-    */
+     */
     public function destroy(User $user): JsonResponse
     {
         DB::beginTransaction();
-    
+
         try {
-            // Excluindo o usuário
             $user->delete();
-    
-            // Confirma o commit do novo registro
+
             DB::commit();
-    
-            // Retorna resposta de sucesso
+
             return response()->json([
                 'status' => true,
-                'message' => 'Usuário excluido com sucesso!',
+                'message' => 'Usuário excluído com sucesso!',
                 'user' => $user
             ], 200);
-    
+
         } catch (Exception $e) {
-            // Caso aconteça algum erro, realiza o rollback
             DB::rollBack();
-    
-            // Retorna mensagem de erro
+
             return response()->json([
                 'status' => false,
                 'message' => 'Erro ao excluir usuário!'
             ], 400);
         }
     }
-    
 }
