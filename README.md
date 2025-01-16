@@ -31,6 +31,25 @@ Este projeto utiliza Docker para simplificar o ambiente de desenvolvimento.
 
 ## Testar a API
 - http://localhost:8000
+
+## Dados de acesso para testar API
+- Endpoint http://127.0.0.1:8000/api/login
+
+JSON
+{
+    "email": "admin@api.com.br",
+    "password": "123456"
+}
+
+Preview
+{
+	"token": {
+		"access_token": "15|Zsjb2hk2c1AuvmSHWeZPoCvxblhb5B0R3FUz01ZFcedc0b12",
+		"token_type": "bearer",
+		"expires_in": null
+	}
+}
+
 ## Documentação da API
 - http://localhost:8000/doc
 
