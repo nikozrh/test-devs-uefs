@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile  # Caminho para o seu Dockerfile
+        container_name: laravel-app
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./api-BlogSphere:/var/www
+        networks:
+            - app-network
+        command: php artisan serve --host=0.0.0.0 --port=8000  # Adicionado para iniciar o servidor Laravel automaticamente  
+    mysql:
+        image: mysql:8.0.33-oracle
+        container_name: mysql-container
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: blogSphore
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+        ports:
+            - "3306:3306"
+        networks:
+            - app-network
+    # frontend:
+    #     image: node:18.15.0  # Imagem Node.js para Vue.js
+    #     container_name: frontend-container
+    #     working_dir: /var/www/frontend-vue
+    #     volumes: 
+    #         - ./frontend-vue:/var/www/frontend-vue  # Diretório frontend-vue montado no contêiner
+    #     command: >
+    #         /bin/bash -c "
+    #         if [ ! -f package.json ]; then
+    #         npx create-vue@latest /var/www/frontend-vue --default &&
+    #         cd /var/www/frontend-vue &&
+    #         npm install;
+    #         fi &&
+    #         npm run dev --host
+    #         "
+    #     ports:
+    #         - "5173:5173"  # Porta para o servidor de desenvolvimento do Vue.js
+    #     depends_on:
+    #         - app
+    #     networks:
+    #         - app-network
+networks:
+    app-network:
+        driver: bridge
