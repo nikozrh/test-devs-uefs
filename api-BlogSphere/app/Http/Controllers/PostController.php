@@ -46,7 +46,8 @@ class PostController extends Controller
     // Excluir um post
     public function destroy($id)
     {
-        $this->postService->deletePost($id);
-        return response()->json(['message' => 'Post deletado com sucesso.']);
+        $msg = 'Post deletado com sucesso.';
+        $deleted = $this->postService->deletePost($id);
+        return response()->json([ $msg => $deleted ], 204);
     }
 }

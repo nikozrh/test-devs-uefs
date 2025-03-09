@@ -46,8 +46,9 @@ class TagController extends Controller
     // Excluir uma tag
     public function destroy($id)
     {
-        $this->tagService->deleteTag($id);
-        return response()->json(['message' => 'Tag deletada com sucesso.']);
+        $msg = 'Tag deletada com sucesso.';
+        $deleted = $this->tagService->deleteTag($id);
+        return response()->json([ $msg => $deleted ], 204);
     }
 }
 

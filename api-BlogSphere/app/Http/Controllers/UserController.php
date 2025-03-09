@@ -31,6 +31,8 @@ class UserController extends Controller {
     }
 
     public function destroy($id) {
-        return response()->json(['deleted' => $this->userService->deleteUser($id)]);
+        $deleted = $this->userService->deleteUser($id);
+        return response()->json(['deleted' => $deleted], 204);
     }
 }
+
