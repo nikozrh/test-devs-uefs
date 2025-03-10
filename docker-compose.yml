@@ -58,6 +58,7 @@ services:
       - app-network
     ports:
       - "5173:5173" # Porta para o servidor Vite
+      - "5174:5174" 
     depends_on:
       - app # Frontend depende do backend (Laravel)
     command: >
