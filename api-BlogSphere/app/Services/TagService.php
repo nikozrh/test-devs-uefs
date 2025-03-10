@@ -30,7 +30,14 @@ class TagService
 
     public function updateTag($id, array $data)
     {
-        return $this->tagRepository->update($id, $data);
+        $tag = $this->tagRepository->findById($id);
+
+        if (!$tag) {
+            return null; // Tag não encontrada
+        }
+
+        // Atualizar a tag no repositório
+        return $this->tagRepository->update($tag, $data);
     }
 
     public function deleteTag($id)

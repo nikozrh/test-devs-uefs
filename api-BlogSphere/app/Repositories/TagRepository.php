@@ -6,6 +6,7 @@ use App\Models\Tag;
 
 class TagRepository
 {
+
     public function getAll()
     {
         return Tag::all();
@@ -21,9 +22,8 @@ class TagRepository
         return Tag::create($data);
     }
 
-    public function update($id, array $data)
+    public function update(Tag $tag, array $data)
     {
-        $tag = Tag::findOrFail($id);
         $tag->update($data);
         return $tag;
     }
@@ -32,5 +32,10 @@ class TagRepository
     {
         $tag = Tag::findOrFail($id);
         $tag->delete();
+    }
+
+    public function findById($id)
+    {
+        return Tag::find($id);
     }
 }

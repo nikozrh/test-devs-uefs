@@ -2,17 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use Illuminate\Http\Request;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Validator;
 
 /**
 * @OA\Info(
- * version="1.0.0",
- * title="Gerenciamento de Usuários, Postagens e Palavras-chave - Api Blogsphere",
- * description="Bem-vindo à documentação da API Gerenciamento de **Usuários**, **Postagens** e **Palavras-chave**, criada para oferecer uma solução eficiente para manipulação de dados relacionados a usuários, suas postagens e as palavras-chave associadas.
- * **Visão Geral**
- * Este sistema foi projetado para refletir uma estrutura hierárquica onde:
- * Essa API fornece endpoints para criar, ler, atualizar e deletar (CRUD) os dados de usuários, postagens e palavras-chave.",
+ *     version="1.0.0",
+ *     title="Gerenciamento de Usuários, Postagens e Palavras-chave - API Blogsphere",
+ *     description="Bem-vindo à documentação da API de Gerenciamento de Usuários, Postagens e Palavras-chave. 
+ *     Esta API foi criada para oferecer uma solução eficiente para manipulação de dados relacionados a:
+ *     USUÁRIOS: Cadastro e gerenciamento de usuários.
+ *     POSTAGENS: Publicação e gerenciamento de postagens.
+ *     PALAVRAS-CHAVES (Tags): Criação e associação de palavras-chave com postagens.
+ *     
+ *     GUIA DE USO SIMPLIFICADO:
+ *     1. Cadastre um usuário no sistema.
+ *     2. Crie uma ou mais tags conforme necessário.
+ *     3. Publique uma postagem vinculada a pelo menos uma tag.",
+ *     @OA\Contact(
+ *         email="sandoelio@hotmail.com"
+ *     )
  * )
  * @OA\Tag(
  *     name="Usuários",
@@ -57,7 +67,26 @@ class UserController extends Controller {
         */
 
     public function index() {
-        return response()->json($this->userService->getAllUsers());
+
+        try {
+            // Buscar todos os registros
+            $items = $this->userService->getAllUsers();
+    
+            // Verificar se há itens na listagem
+            if ($items->isEmpty()) {
+                return response()->json([
+                    'message' => 'Nenhum item encontrado.',
+                ], 404);
+            }
+    
+            return response()->json($items, 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao buscar os itens.',
+                'error' => $e->getMessage(),
+            ], 500); 
+        }
     }
 
     /**
@@ -136,9 +165,35 @@ class UserController extends Controller {
      * )
      *
      */
-    public function store(UserRequest $request) {
+    public function store(Request $request) {
 
-        return response()->json($this->userService->createUser($request->validated()), 201);
+        // Validação dos dados recebidos
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erro de validação',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $validatedData = $validator->validated();
+
+        // Chamar o serviço para criar o usuário
+        try {
+            $user = $this->userService->createUser($validatedData);
+
+            return response()->json($user, 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao criar o usuário',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -193,8 +248,41 @@ class UserController extends Controller {
      *     )
      * )
      */
-    public function update(UserRequest $request, $id) {
-        return response()->json($this->userService->updateUser($id, $request->validated()));
+    public function update(Request $request, $id) {
+          
+        $validator = Validator::make($request->all(), [
+
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'sometimes|required|string|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erro de validação',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $validatedData = $validator->validated();
+
+        try {
+            $user = $this->userService->updateUser($id, $validatedData);
+
+            // Verificar se o usuário foi encontrado
+            if (!$user) {
+                return response()->json([
+                    'message' => 'Usuário não encontrado.',
+                ], 404);
+            }
+
+            return response()->json($user, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao atualizar o usuário',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

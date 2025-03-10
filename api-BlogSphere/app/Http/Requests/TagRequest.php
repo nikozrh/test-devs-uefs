@@ -26,4 +26,13 @@ class TagRequest extends FormRequest
             'name' => 'required|string|max:255|unique:tags,name',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'O campo "Nome" é obrigatório.',
+            'name.string' => 'O campo "Nome" deve ser uma string.',
+            'name.max' => 'O campo "Nome" não pode ter mais que 255 caracteres.',
+        ];
+    }
 }

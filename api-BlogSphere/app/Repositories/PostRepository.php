@@ -6,6 +6,13 @@ use App\Models\Post;
 
 class PostRepository
 {
+    protected $post;
+
+    public function __construct(Post $post)
+    {
+        $this->post = $post;
+    } 
+
     public function getAll()
     {
         return Post::with('tags', 'user')->get();
@@ -18,19 +25,32 @@ class PostRepository
 
     public function create(array $data)
     {
-        return Post::create($data);
+        return $this->post->create([
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'user_id' => $data['user_id'],
+        ]);
     }
 
-    public function update($id, array $data)
+    public function update(Post $post, array $data)
     {
-        $post = Post::findOrFail($id);
         $post->update($data);
-        return $post;
     }
 
     public function delete($id)
     {
         $post = Post::findOrFail($id);
         $post->delete();
+    }
+
+    // Sincroniza as tags do post
+    public function syncTags(Post $post, array $tags)
+    {
+        $post->tags()->sync($tags);
+    }
+
+    public function findById($id)
+    {
+        return Post::find($id); 
     }
 }

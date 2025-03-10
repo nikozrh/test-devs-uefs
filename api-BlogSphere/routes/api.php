@@ -10,3 +10,4 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('posts', PostController::class);
 
 Route::apiResource('tags', TagController::class);
+

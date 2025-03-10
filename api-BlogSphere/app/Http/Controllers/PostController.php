@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostRequest;
 use App\Services\PostService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
 * @OA\Tag(
@@ -53,7 +54,24 @@ class PostController extends Controller
         */
     public function index()
     {
-        return response()->json($this->postService->getAllPosts());
+        try {
+
+            $posts = $this->postService->getAllPosts();
+    
+            if ($posts->isEmpty()) {
+                return response()->json([
+                    'message' => 'Nenhum post encontrado.',
+                ], 404); 
+            }
+    
+            return response()->json($posts, 200); 
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'message' => 'Erro ao buscar os posts.',
+                'error' => $e->getMessage(),
+            ], 500); 
+        }
     }
 
    /**
@@ -105,11 +123,39 @@ class PostController extends Controller
      * )
      *
      */
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-        $post = $this->postService->createPost($data);
-        return response()->json($post, 201);
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'user_id' => 'required|exists:users,id',
+            'tags' => 'required|array|min:1', 
+            'tags.*' => 'exists:tags,id',    
+        ]);
+
+        // Se houver erros de validação, retorna uma resposta com os erros
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erro de validação',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // Dados validados
+        $validatedData = $validator->validated();
+
+        // Chamar o serviço para criar o post
+        try {
+            $post = $this->postService->createPost($validatedData);
+
+            return response()->json($post, 201); 
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao criar o post',
+                'error' => $e->getMessage(),
+            ], 500);
+        } 
     }
 
    /**
@@ -213,11 +259,43 @@ class PostController extends Controller
         *     )
         * )
         */
-    public function update(PostRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->validated();
-        $post = $this->postService->updatePost($id, $data);
-        return response()->json($post);
+        $validator = Validator::make($request->all(), [
+            'title' => 'sometimes|required|string|max:255',
+            'content' => 'sometimes|required|string',
+            'user_id' => 'sometimes|required|exists:users,id',
+            'tags' => 'sometimes|array|min:1', 
+            'tags.*' => 'exists:tags,id',    
+        ]);
+
+        // Se a validação falhar, retorna um erro
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erro de validação',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $validatedData = $validator->validated();
+        
+        // Chamar o serviço para atualizar o post
+        try {
+            $post = $this->postService->updatePost($id, $validatedData);
+           
+            if (!$post) {
+                return response()->json([
+                    'message' => 'Post não encontrado.',
+                ], 404);
+            }
+
+            return response()->json($post, 200); 
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao atualizar o post',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

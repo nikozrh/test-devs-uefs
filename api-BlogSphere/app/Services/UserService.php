@@ -27,10 +27,19 @@ class UserService {
     }
 
     public function updateUser($id, array $data) {
+  
+        $user = $this->userRepository->findById($id);
+
+        if (!$user) {
+            return null; 
+        }
+
+        // Atualizar a senha apenas se for enviada
         if (isset($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
-        return $this->userRepository->update($id, $data);
+
+        return $this->userRepository->update($user, $data);
     }
 
     public function deleteUser($id) {

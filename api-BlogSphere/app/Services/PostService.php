@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\PostRepository;
+use Exception;
 
 class PostService
 {
@@ -25,24 +26,43 @@ class PostService
 
     public function createPost(array $data)
     {
-        $post = $this->postRepository->create($data);
+        try {
+            // Cria o post no repositório
+            $post = $this->postRepository->create($data);
 
-        if (isset($data['tags'])) {
-            $post->tags()->sync($data['tags']);
-        }
+            // Associa as tags ao post
+            if (!empty($data['tags'])) {
+                $this->postRepository->syncTags($post, $data['tags']);
+            }
 
-        return $post->load('tags');
+            return $post->load('tags'); // Retorna o post com as tags associadas
+        } catch (Exception $e) {
+            throw new Exception('Erro ao criar o post: ' . $e->getMessage());
+        }    
     }
 
     public function updatePost($id, array $data)
     {
-        $post = $this->postRepository->update($id, $data);
-
-        if (isset($data['tags'])) {
-            $post->tags()->sync($data['tags']);
+        try {
+            // Buscar o post pelo ID
+            $post = $this->postRepository->findById($id);
+          
+            if (!$post) {
+                return null; // Post não encontrado
+            }
+    
+            // Atualizar os dados do post
+            $this->postRepository->update($post, $data);
+    
+            // Sincronizar as tags, se fornecidas
+            if (isset($data['tags'])) {
+                $this->postRepository->syncTags($post, $data['tags']);
+            }
+    
+            return $post->load('tags'); // Retorna o post com as tags atualizadas
+        } catch (\Exception $e) {
+            throw new \Exception('Erro ao atualizar o post: ' . $e->getMessage());
         }
-
-        return $post->load('tags');
     }
 
     public function deletePost($id)

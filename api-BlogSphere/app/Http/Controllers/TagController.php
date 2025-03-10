@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TagRequest;
 use App\Services\TagService;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
  /**
   * @OA\Tag(
@@ -44,7 +44,25 @@ class TagController extends Controller
  
     public function index()
     {
-        return response()->json($this->tagService->getAllTags());
+        try {
+            $tags = $this->tagService->getAllTags();
+    
+
+            if ($tags->isEmpty()) {
+                return response()->json([
+                    'message' => 'Nenhuma tag encontrada.',
+                ], 404); 
+            }
+    
+            return response()->json($tags, 200); 
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'message' => 'Erro ao buscar as tags.',
+                'error' => $e->getMessage(),
+            ], 500); 
+        }
     }
 
    /**
@@ -79,11 +97,33 @@ class TagController extends Controller
         *     )
         * )
         */
-    public function store(TagRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-        $tag = $this->tagService->createTag($data);
-        return response()->json($tag, 201);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|unique:tags,name|max:255', 
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erro de validação',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // Dados validados
+        $validatedData = $validator->validated();
+
+        // Chamar o serviço para criar a tag
+        try {
+            $tag = $this->tagService->createTag($validatedData);
+
+            return response()->json($tag, 201); 
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao criar a tag',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
    /**
@@ -161,11 +201,40 @@ class TagController extends Controller
         *     )
         * )
         */
-    public function update(TagRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->validated();
-        $tag = $this->tagService->updateTag($id, $data);
-        return response()->json($tag);
+        $validator = Validator::make($request->all(), [
+
+            'name' => 'required|string|unique:tags,name,' . $id . '|max:255', 
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erro de validação',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Dados validados
+        $validatedData = $validator->validated();
+
+        try {
+            $tag = $this->tagService->updateTag($id, $validatedData);
+
+            if (!$tag) {
+                return response()->json([
+                    'message' => 'Tag não encontrada.',
+                ], 404);
+            }
+
+            return response()->json($tag, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao atualizar a tag',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

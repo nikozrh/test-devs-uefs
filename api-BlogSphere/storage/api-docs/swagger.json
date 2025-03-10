@@ -1,8 +1,11 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Gerenciamento de Usuários, Postagens e Palavras-chave - Api Blogsphere",
-        "description": "Bem-vindo à documentação da API Gerenciamento de **Usuários**, **Postagens** e **Palavras-chave**, criada para oferecer uma solução eficiente para manipulação de dados relacionados a usuários, suas postagens e as palavras-chave associadas.\n * **Visão Geral**\n * Este sistema foi projetado para refletir uma estrutura hierárquica onde:\n * Essa API fornece endpoints para criar, ler, atualizar e deletar (CRUD) os dados de usuários, postagens e palavras-chave.",
+        "title": "Gerenciamento de Usuários, Postagens e Palavras-chave - API Blogsphere",
+        "description": "Bem-vindo à documentação da API de Gerenciamento de Usuários, Postagens e Palavras-chave. \n *     Esta API foi criada para oferecer uma solução eficiente para manipulação de dados relacionados a:\n *     USUÁRIOS: Cadastro e gerenciamento de usuários.\n *     POSTAGENS: Publicação e gerenciamento de postagens.\n *     PALAVRAS-CHAVES (Tags): Criação e associação de palavras-chave com postagens.\n *     \n *     GUIA DE USO SIMPLIFICADO:\n *     1. Cadastre um usuário no sistema.\n *     2. Crie uma ou mais tags conforme necessário.\n *     3. Publique uma postagem vinculada a pelo menos uma tag.",
+        "contact": {
+            "email": "sandoelio@hotmail.com"
+        },
         "version": "1.0.0"
     },
     "paths": {
