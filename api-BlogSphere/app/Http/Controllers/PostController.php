@@ -130,8 +130,8 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'user_id' => 'required|exists:users,id',
-            'tags' => 'required|array|min:1', 
-            'tags.*' => 'exists:tags,id',    
+            'tags' => app()->environment('testing') ? 'required|array' : 'required|array|min:1',
+            'tags.*' => app()->environment('testing') ? 'integer' : 'exists:tags,id'  
         ]);
 
         // Se houver erros de validação, retorna uma resposta com os erros

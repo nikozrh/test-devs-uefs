@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Services\TagService;
 use Mockery;
 use Tests\TestCase;
+use Illuminate\Support\Collection;
 
 class TagTest extends TestCase
 {
@@ -25,23 +26,26 @@ class TagTest extends TestCase
     // Testar a listagem de tags
     public function test_list_tags()
     {
-        // Definindo comportamento esperado
+        // Simular os dados como Collection
+        $mockedTags = new Collection([
+            ['id' => 1, 'name' => 'Tag 1'],
+            ['id' => 2, 'name' => 'Tag 2']
+        ]);
+
+        // Configurar o mock do serviço
         $this->tagServiceMock->shouldReceive('getAllTags')
             ->once()
-            ->andReturn([
-                ['id' => 1, 'name' => 'Tag 1'],
-                ['id' => 2, 'name' => 'Tag 2']
-            ]);
+            ->andReturn($mockedTags);
 
-        // Chamando a rota para listar tags
+        // Fazer a requisição GET para a rota
         $response = $this->getJson('/api/tags');
 
-        // Validando resposta
+        // Verificar o status e o conteúdo da resposta
         $response->assertStatus(200)
-            ->assertJsonCount(2)
+            ->assertJsonCount(2) // Deve retornar 2 tags
             ->assertJson([
                 ['id' => 1, 'name' => 'Tag 1'],
-                ['id' => 2, 'name' => 'Tag 2']
+                ['id' => 2, 'name' => 'Tag 2'],
             ]);
     }
 

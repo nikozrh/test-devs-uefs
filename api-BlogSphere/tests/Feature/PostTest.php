@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Services\PostService;
 use Mockery;
 use Tests\TestCase;
+use Illuminate\Support\Collection;
 
 class PostTest extends TestCase
 {
@@ -16,7 +17,7 @@ class PostTest extends TestCase
         parent::setUp();
 
         // Criando mock do PostService
-        $this->postServiceMock = Mockery::mock(PostService::class);
+        $this->postServiceMock = Mockery::mock(\App\Services\PostService::class);
 
         // Registrando o mock no contêiner de serviços
         $this->app->instance(PostService::class, $this->postServiceMock);
@@ -25,45 +26,69 @@ class PostTest extends TestCase
     // Testar a listagem de posts
     public function test_list_posts()
     {
-        // Definindo comportamento esperado
+        $mockedPosts = new Collection([
+            ['id' => 1, 'title' => 'Post 1', 'content' => 'Conteúdo do Post 1'],
+            ['id' => 2, 'title' => 'Post 2', 'content' => 'Conteúdo do Post 2']
+        ]);
+
+        // Configurar o mock do serviço
         $this->postServiceMock->shouldReceive('getAllPosts')
             ->once()
-            ->andReturn([
-                ['id' => 1, 'title' => 'Post 1', 'content' => 'Conteúdo do Post 1'],
-                ['id' => 2, 'title' => 'Post 2', 'content' => 'Conteúdo do Post 2']
-            ]);
+            ->andReturn($mockedPosts);
 
+        // Fazer a requisição GET para a rota
         $response = $this->getJson('/api/posts');
 
         $response->assertStatus(200)
-                 ->assertJsonCount(2)
-                 ->assertJson([
-                     ['id' => 1, 'title' => 'Post 1', 'content' => 'Conteúdo do Post 1'],
-                     ['id' => 2, 'title' => 'Post 2', 'content' => 'Conteúdo do Post 2']
-                 ]);
+                ->assertJsonCount(2)
+                ->assertJson([
+                    ['id' => 1, 'title' => 'Post 1', 'content' => 'Conteúdo do Post 1'],
+                    ['id' => 2, 'title' => 'Post 2', 'content' => 'Conteúdo do Post 2'],
+                ]);
     }
 
-    // Testar a criação de um post
-    public function test_create_post()
+
+    public function test_create_post_tag()
     {
-        // Criar um usuário válido para o teste
-        $user = \App\Models\User::factory()->create();
+        // IDs simulados de tags válidas
+        $validTagIds = [1, 2];
 
-        $postData = [
-            'user_id' => $user->id, 
-            'title' => 'Novo Post',
-            'content' => 'Conteúdo do novo post'
-        ];
-
+        // Configurando o mock do PostService
         $this->postServiceMock->shouldReceive('createPost')
             ->once()
-            ->with($postData)
-            ->andReturn(array_merge(['id' => 1], $postData));
+            ->andReturn([
+                'id' => 1,
+                'title' => 'Post de Teste',
+                'content' => 'Conteúdo do post de teste',
+                'user_id' => 1,
+                'tags' => [
+                    ['id' => 1, 'name' => 'Tag 1'],
+                    ['id' => 2, 'name' => 'Tag 2']
+                ],
+            ]);
 
-        $response = $this->postJson('/api/posts', $postData);
+        // Dados enviados na requisição
+        $payload = [
+            'title' => 'Post de Teste',
+            'content' => 'Conteúdo do post de teste',
+            'user_id' => 1,
+            'tags' => $validTagIds, // Enviar IDs simulados de tags válidas
+        ];
 
+        // Fazer a requisição POST
+        $response = $this->postJson('/api/posts', $payload);
+
+        // Verificar o status HTTP e o conteúdo da resposta
         $response->assertStatus(201)
-                ->assertJson(array_merge(['id' => 1], $postData));
+                ->assertJson([
+                    'id' => 1,
+                    'title' => 'Post de Teste',
+                    'content' => 'Conteúdo do post de teste',
+                    'tags' => [
+                        ['id' => 1, 'name' => 'Tag 1'],
+                        ['id' => 2, 'name' => 'Tag 2'],
+                    ],
+                ]);
     }
 
     // Testar a atualização de um post
@@ -92,7 +117,6 @@ class PostTest extends TestCase
     // Testar a exclusão de um post
     public function test_delete_post()
     {
-        // Definindo comportamento esperado
         $this->postServiceMock->shouldReceive('deletePost')
             ->once()
             ->with(1)

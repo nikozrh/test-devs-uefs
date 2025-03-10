@@ -69,7 +69,6 @@ class UserController extends Controller {
     public function index() {
 
         try {
-            // Buscar todos os registros
             $items = $this->userService->getAllUsers();
     
             // Verificar se há itens na listagem

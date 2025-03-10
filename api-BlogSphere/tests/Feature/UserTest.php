@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Services\UserService;
 use Mockery;
+use Illuminate\Support\Collection;
 
 class UserTest extends TestCase
 {
@@ -15,35 +16,33 @@ class UserTest extends TestCase
         parent::setUp();
 
         // Criando um Mock do UserService
-        $this->userService = Mockery::mock(UserService::class);
-        $this->app->instance(UserService::class, $this->userService);
+        $this->userService = Mockery::mock(\App\Services\UserService::class);
+        $this->app->instance(\App\Services\UserService::class, $this->userService);
     }
 
     public function test_list_users()
     {
-        // Criando um mock para UserService
-        $userServiceMock = Mockery::mock(UserService::class);
+        // Simular os dados como Collection
+        $mockedUsers = new Collection([
+            ['id' => 1, 'name' => 'Usuário 1', 'email' => 'user1@example.com'],
+            ['id' => 2, 'name' => 'Usuário 2', 'email' => 'user2@example.com'],
+        ]);
 
-        // Simulando retorno esperado do método getAllUsers()
-        $userServiceMock->shouldReceive('getAllUsers')
-            ->once() // Espera que seja chamado uma vez
-            ->andReturn([
-                ['name' => 'John Doe', 'email' => 'john@example.com'],
-                ['name' => 'Jane Doe', 'email' => 'jane@example.com'],
-            ]);
+        // Configurar o mock do serviço
+        $this->userService->shouldReceive('getAllUsers')
+            ->once()
+            ->andReturn($mockedUsers);
 
-        // Substituindo a instância real pelo mock
-        $this->app->instance(UserService::class, $userServiceMock);
-
-        // Fazendo a requisição para listar usuários
+        // Fazer a requisição GET para a rota
         $response = $this->getJson('/api/users');
 
-        // Verificando resposta
+        // Verificar o status HTTP e o conteúdo retornado
         $response->assertStatus(200)
-                 ->assertJson([
-                     ['name' => 'John Doe', 'email' => 'john@example.com'],
-                     ['name' => 'Jane Doe', 'email' => 'jane@example.com'],
-                 ]);
+            ->assertJsonCount(2) // Deve retornar 2 usuários
+            ->assertJson([
+                ['id' => 1, 'name' => 'Usuário 1', 'email' => 'user1@example.com'],
+                ['id' => 2, 'name' => 'Usuário 2', 'email' => 'user2@example.com'],
+            ]);
     }
 
     
