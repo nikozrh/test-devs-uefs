@@ -1,0 +1,75 @@
+version: "3.8"
+
+services:
+  # Backend (Laravel)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api-BlogSphere:/var/www # Sincroniza o diretório local com o container
+    networks:
+      - app-network
+    depends_on:
+      - mysql # Backend depende do banco de dados
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: blogSphore
+      DB_USERNAME: user
+      DB_PASSWORD: password
+    command: >
+      /bin/bash -c "
+      while ! nc -z mysql 3306; do
+        echo 'Aguardando o banco de dados...';
+        sleep 1;
+      done;
+      php artisan migrate &&
+      php artisan serve --host=0.0.0.0 --port=8000
+      "
+  # Banco de Dados (MySQL)
+  mysql:
+    image: mysql:8.0.33-oracle
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: blogSphore
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql # Persistir os dados
+    networks:
+      - app-network
+
+  # Frontend (Vue.js)
+  frontend:
+    image: node:18.15.0
+    container_name: frontend-container
+    working_dir: /var/www/frontend-BlogSphere
+    volumes:
+      - ./frontend-BlogSphere:/var/www/frontend-BlogSphere # Sincroniza o diretório do frontend
+    networks:
+      - app-network
+    ports:
+      - "5173:5173" # Porta para o servidor Vite
+    depends_on:
+      - app # Frontend depende do backend (Laravel)
+    command: >
+      /bin/bash -c "
+      npm install &&
+      npm run dev -- --host 0.0.0.0 --port 5173
+      "
+# Definição da Rede Compartilhada
+networks:
+  app-network:
+    driver: bridge
+
+# Persistência de Dados do Banco de Dados
+volumes:
+  mysql-data:
