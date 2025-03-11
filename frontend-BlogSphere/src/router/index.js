@@ -4,10 +4,13 @@ import Posts from '../pages/Posts.vue';
 import Tags from '../pages/Tags.vue';
 
 const routes = [
-  { path: '/', component: Users },
+  { path: '/users', component: Users },
+  { path: '/posts', component: Posts },
+  { path: '/tags', component: Tags },
+  { path: '/', redirect: '/users' }, // Redireciona para /users como padrão
 ];
 
-export const router = createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
 });
