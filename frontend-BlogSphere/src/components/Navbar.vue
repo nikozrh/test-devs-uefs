@@ -1,22 +1,46 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <!-- Nome do Blog no Lado Esquerdo -->
+            <!-- Nome do Blog -->
             <router-link class="navbar-brand" to="/">BlogSphere</router-link>
 
-            <!-- Botão para navegação colapsada (responsivo) -->
+            <!-- Botão Responsivo -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Menu de Navegação -->
+            <!-- Links do Navbar -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <!-- Links de Navegação Dinâmicos -->
-                    <li class="nav-item" v-for="link in links" :key="link.name">
-                        <router-link class="nav-link" :to="link.path" active-class="active" aria-current="page">
-                            {{ link.name }}
+                <ul class="navbar-nav">
+                    <!-- Botão Home -->
+                    <li class="nav-item">
+                        <router-link class="nav-link active-link" to="/" active-class="active">
+                            Home
+                        </router-link>
+                    </li>
+                    <!-- Botão Usuários -->
+                    <li class="nav-item">
+                        <router-link class="nav-link" :to="userExists ? '/users' : '#'"
+                            :class="{ 'active-link': userExists, 'disabled-link': !userExists }"
+                            aria-disabled="!userExists">
+                            Usuários
+                        </router-link>
+                    </li>
+                    <!-- Botão Tags -->
+                    <li class="nav-item">
+                        <router-link class="nav-link" :to="userExists ? '/tags' : '#'"
+                            :class="{ 'active-link': userExists, 'disabled-link': !userExists }"
+                            aria-disabled="!userExists">
+                            Tags
+                        </router-link>
+                    </li>
+                    <!-- Botão Postagens -->
+                    <li class="nav-item">
+                        <router-link class="nav-link" :to="userExists && tagsExist ? '/posts' : '#'"
+                            :class="{ 'active-link': userExists && tagsExist, 'disabled-link': !userExists || !tagsExist }"
+                            aria-disabled="!userExists || !tagsExist">
+                            Postagens
                         </router-link>
                     </li>
                 </ul>
@@ -26,55 +50,65 @@
 </template>
 
 <script>
+import api from "../services/api";
+
 export default {
     name: "Navbar",
     data() {
         return {
-            // Links dinâmicos de navegação
-            links: [
-                { name: "Home", path: "/" },
-                { name: "Usuários", path: "/users" },
-                { name: "Tags", path: "/tags" },
-                { name: "Postagem", path: "/posts" },
-            ],
+            userExists: false, // Indica se há pelo menos um usuário no banco
+            tagsExist: false, // Indica se há pelo menos uma tag no banco
         };
+    },
+    methods: {
+        async updateState() {
+            try {
+                const usersResponse = await api.get("/users");
+                this.userExists = usersResponse.data.length > 0;
+
+                const tagsResponse = await api.get("/tags");
+                this.tagsExist = tagsResponse.data.length > 0;
+
+                console.log("Estado atualizado:", {
+                    userExists: this.userExists,
+                    tagsExist: this.tagsExist,
+                });
+            } catch (error) {
+                console.error("Erro ao atualizar estado do Navbar:", error);
+            }
+        },
+    },
+    mounted() {
+        this.updateState(); // Atualiza os estados ao carregar
     },
 };
 </script>
 
 <style scoped>
-/* Estilo do Navbar */
-.navbar {
-    background-color: #007bff;
-    /* Azul vibrante */
-}
-
-.navbar .navbar-brand {
+/* Links ativos (acessíveis) */
+.active-link {
+    color: #ffffff;
+    /* Branco para links ativos */
     font-weight: bold;
-    color: #fff;
-    /* Branco para o texto */
 }
 
-.navbar .navbar-brand:hover {
-    color: #dfe6f1;
-    /* Branco mais claro no hover */
+/* Links desativados (não acessíveis) */
+.disabled-link {
+    pointer-events: none;
+    /* Remove interatividade */
+    color: #aaa;
+    /* Cinza para indicar desativado */
+    opacity: 0.7;
 }
 
-.navbar .nav-link {
-    color: #fff;
-    /* Branco para os links */
-    transition: color 0.2s ease-in-out;
-}
-
-.navbar .nav-link:hover {
-    color: #d31414;
-    /* Branco mais claro no hover */
-}
-
-/* Estilo para o link ativo */
-.active {
-    font-weight: bold;
-    color: #2edee4 !important;
-    /* Amarelo destaque */
+/* Mensagem adicional para o botão de Tags */
+.link-message {
+    color: #f8d7da;
+    /* Vermelho suave para a mensagem */
+    font-size: 0.85rem;
+    /* Texto menor */
+    margin-top: 4px;
+    font-style: italic;
+    /* Texto em itálico para chamar atenção */
 }
 </style>

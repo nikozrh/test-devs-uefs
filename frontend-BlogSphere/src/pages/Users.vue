@@ -1,9 +1,5 @@
 <template>
 	<div class="container mt-5 p-4 bg-white shadow rounded">
-		<!-- Mensagem de Erro ao Buscar Usuários -->
-		<div v-if="error" class="alert alert-danger" role="alert">
-			<strong>Erro!</strong> Ocorreu um erro ao buscar os usuários.
-		</div>
 
 		<!-- Mensagem de Sucesso -->
 		<div v-if="notification" class="alert alert-success" role="alert">
@@ -182,15 +178,22 @@ export default {
 		// Exclui um usuário
 		async deleteUser(id) {
 			try {
+				// Faz a requisição para excluir o usuário no backend
 				await api.delete(`/users/${id}`);
-				this.notification = "Usuário excluído com sucesso!"; // Mensagem de sucesso
+
+				// Atualiza a lista local, removendo o usuário excluído
+				this.users = this.users.filter(user => user.id !== id);
+				this.filteredUsers = this.filteredUsers.filter(user => user.id !== id);
+
+				// Exibe a notificação de sucesso
+				this.notification = "Usuário excluído com sucesso!";
 				setTimeout(() => (this.notification = ""), 3000); // Remove a mensagem após 3 segundos
-				this.fetchUsers(); // Atualiza a tabela
 			} catch (error) {
 				console.error("Erro ao excluir usuário:", error);
 				alert("Não foi possível excluir o usuário. Tente novamente.");
 			}
 		},
+
 
 		filterUsersById() {
 			if (this.filterId === "") {

@@ -5,6 +5,7 @@ const Home = () => import("../pages/Home.vue");
 const Users = () => import("../pages/Users.vue");
 const Tags = () => import("../pages/Tags.vue");
 const Posts = () => import("../pages/Posts.vue");
+const Forum = () => import ("../pages/Forum.vue");
 
 const routes = [
   {
@@ -37,6 +38,13 @@ const routes = [
     name: "NotFound",
     component: () => import("../pages/NotFound.vue"), // Página de erro
     meta: { title: "Página não encontrada" },
+  },
+
+  {
+    path: "/forum",
+    name: "Forum",
+    component: Forum,
+    meta: { title: "Fórum" },
   },
   
 ];
