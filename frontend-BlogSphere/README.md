@@ -1,4 +1,4 @@
-<h1>**BlogSphere Frontend**</h1>
+<h1>BlogSphere Frontend</h1>
 Bem-vindo ao BlogSphere Frontend! Este projeto é um frontend construído com Vue.js, que oferece uma interface para gerenciar usuários, postagens, tags e um fórum com paginação.</br> 
 O sistema é simples, bem organizado e integrado com uma API backend.
 
@@ -29,7 +29,7 @@ Abaixo estão as principais ferramentas e bibliotecas utilizadas no desenvolvime
 
 🗂️ **Estrutura do Projeto**
 A organização do projeto foi feita para garantir clareza e escalabilidade. Veja abaixo a estrutura dos diretórios:
-
+```
 src/
 ├── components/
 │   ├── Navbar.vue         # Menu de navegação no topo
@@ -51,7 +51,7 @@ src/
 │
 ├── App.vue                # Componente principal
 ├── main.js                # Ponto de entrada
-
+```
 <hr>
 
 🔧 **Pré-requisitos**
