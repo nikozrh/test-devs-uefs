@@ -38,7 +38,7 @@
 					Nenhuma tag criada. Esta etapa é obrigatória.
 				</p>
 				<p v-else class="mt-2 text-success">
-					Temos ags criadas! ✅
+					Temos Tags criadas! ✅
 				</p>
 			</div>
 		</div>
