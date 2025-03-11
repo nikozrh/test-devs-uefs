@@ -1,66 +1,196 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API Blogsphere
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descrição
+Esta é uma API REST desenvolvida em Laravel 11 com PHP 8.3, utilizando MySQL como banco de dados. A API permite a gestão de Usuários, Tags e Postagens, seguindo o padrão arquitetural MVC com Service e Repository. Os testes são implementados utilizando PHPUnit e Mockery, garantindo a integridade dos serviços. A documentação da API é gerada pelo Swagger (L5-Swagger).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tecnologias Utilizadas
+- **Framework:** Laravel 11
+- **Linguagem:** PHP 8.3
+- **Banco de Dados:** MySQL
+- **Testes:** PHPUnit (^11.0.1) e Mockery (^1.6)
+- **Documentação:** L5-Swagger (^9.0)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Endpoints CRUD
 
-## Learning Laravel
+### **1. Usuários**
+- **Criar Usuário**
+  - `POST /api/users`
+  - Request Body:
+    ```json
+    {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "senha123"
+    }
+    ```
+- **Listar Usuários**
+  - `GET /api/users`
+- **Buscar Usuário por ID**
+  - `GET /api/users/{id}`
+- **Atualizar Usuário**
+  - `PATCH /api/users/{id}`
+  - Request Body:
+    ```json
+    {
+      "name": "John Updated",
+      "email": "johnupdated@example.com"
+    }
+    ```
+- **Deletar Usuário**
+  - `DELETE /api/users/{id}`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### **2. Tags**
+- **Criar Tag**
+  - `POST /api/tags`
+  - Request Body:
+    ```json
+    {
+      "name": "Inspirador"
+    }
+    ```
+- **Listar Tags**
+  - `GET /api/tags`
+- **Buscar Tag por ID**
+  - `GET /api/tags/{id}`
+- **Atualizar Tag**
+  - `PATCH /api/tags/{id}`
+- **Deletar Tag**
+  - `DELETE /api/tags/{id}`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+### **3. Postagens**
+- **Criar Postagem**
+  - `POST /api/posts`
+  - Request Body:
+    ```json
+    {
+      "title": "Meu Primeiro Post",
+      "content": "Este é um exemplo de postagem.",
+      "user_id": 1,
+      "tags": [1, 2]
+    }
+    ```
+- **Listar Postagens**
+  - `GET /api/posts`
+- **Buscar Postagem por ID**
+  - `GET /api/posts/{id}`
+- **Atualizar Postagem**
+  - `PATCH /api/posts/{id}`
+- **Deletar Postagem**
+  - `DELETE /api/posts/{id}`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## **Tratamento de Erros**
+A API segue os padrões de respostas HTTP para indicar erros:
+- **400 Bad Request** – Dados enviados são inválidos.
+- **401 Unauthorized** – Ação requer autenticação.
+- **403 Forbidden** – O usuário não tem permissão.
+- **404 Not Found** – Recurso não encontrado.
+- **422 Unprocessable Entity** – Erro de validação.
+- **500 Internal Server Error** – Erro interno do servidor.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Exemplo de resposta para erro 422:
+```json
+{
+  "message": "O campo email é obrigatório.",
+  "errors": {
+    "email": [
+      "O campo email é obrigatório."
+    ]
+  }
+}
+```
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## **Arquitetura da API**
+- **Controller:** Responsável por receber as requisições e retornar respostas.
+- **Service:** Contém a lógica de negócio.
+- **Repository:** Manipula os dados do banco de dados.
+- **Models:** Representam as entidades do sistema.
 
-## Code of Conduct
+Exemplo de estrutura de pastas:
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── UserController.php
+│   │   ├── TagController.php
+│   │   ├── PostController.php
+├── Models/
+│   ├── User.php
+│   ├── Tag.php
+│   ├── Post.php
+├── Services/
+│   ├── UserService.php
+│   ├── TagService.php
+│   ├── PostService.php
+├── Repositories/
+│   ├── UserRepository.php
+│   ├── TagRepository.php
+│   ├── PostRepository.php
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## **Testes com Mockery e PHPUnit**
+Os testes utilizam Mockery para simular serviços e evitar manipulação real do banco de dados.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Exemplo de teste unitário para listar usuários:
+```php
+public function test_it_can_list_users()
+{
+    $userServiceMock = Mockery::mock(\App\Services\UserService::class);
+    $this->app->instance(\App\Services\UserService::class, $userServiceMock);
+    
+    $userServiceMock->shouldReceive('getAllUsers')
+        ->once()
+        ->andReturn([
+            ['name' => 'John Doe', 'email' => 'john@example.com'],
+            ['name' => 'Jane Doe', 'email' => 'jane@example.com']
+        ]);
+    
+    $response = $this->getJson('/api/users');
+    $response->assertStatus(200)
+             ->assertJsonCount(2);
+}
+```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## **Documentação com Swagger**
+A API utiliza o pacote **L5-Swagger** para documentação interativa. Após configurar o pacote, acesse a documentação via:
+
+```
+http://localhost:8000/api/documentation
+```
+
+![Swagger](./imagens/Swagger.png)
+<br>
+
+![Swagger1](./imagens/Swagger1.png)
+<br>
+
+![Swagger2](./imagens/Swagger2.png)
+<br>
+
+![Swagger3](./imagens/Swagger3.png)
+
+---
+
+## **Próximos Passos**
+- Adicionar autenticação.
+- Melhorar a validação dos dados de entrada.
+- Implementar paginação nas listagens.
+---
+
+Este README será atualizado com mais detalhes conforme a API for evoluindo. 🚀
+

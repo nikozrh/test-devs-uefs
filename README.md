@@ -1,69 +1,191 @@
-# Teste Técnico para a vaga de Engenheiro de Software no projeto UEFS - Avansys/ACP Group
+## Teste Técnico UEFS - Avansys/ACP Group
+---
 
-Este desafio técnico é destinado aos candidatos à posição de Engenheiro de Software no projeto UEFS - Avansys/ACP Group. O objetivo é avaliar as competências em desenvolvimento de software através da criação de uma API Restful utilizando PHP, Laravel (versão 8 ou superior), um Sistema de Gerenciamento de Banco de Dados (SGBD) de sua escolha, e Docker. O prazo para a realização deste teste é de 5 dias, e a entrega deve ser feita por meio do GitHub para análise.
-
-Para participar, faça um fork do repositório, aplique a solução proposta e envie para nossa avaliação.
-
-## Critérios de Avaliação Técnica por Nível de Senioridade
-
-### Para Todos os Níveis
-- **Conhecimento e Uso de Recursos do Laravel**
-- **Familiaridade com Docker e Docker Compose**
-- **Organização e Documentação do Código**
-- **Implementação Efetiva de uma API Restful**
-- **Utilização Adequada dos Recursos do SGBD Escolhido**
-
-### Júnior
-- **Fundamentos de Lógica de Programação**: Capacidade de implementar lógicas simples e eficientes.
-- **Conhecimento Básico dos Princípios SOLID**: Compreensão básica e aplicação em cenários simples.
-- **Adesão aos Padrões PSR**: Implementação básica dos padrões de estilo de código PHP.
-- **Uso Inicial de Testes Unitários (PHPUnit ou PEST) - Não é obrigatório**: Conhecimento básico e aplicação inicial em casos simples.
-
-### Pleno
-- **Lógica de Programação Avançada**: Habilidade em desenvolver soluções mais complexas e eficientes.
-- **Aplicação Avançada dos Princípios SOLID**: Implementação consistente dos princípios em cenários mais complexos.
-- **Testes Unitários Avançados (PHPUnit ou PEST)**: Habilidade em escrever testes unitários mais abrangentes e complexos.
-- **Otimização e Performance do Código**: Capacidade de otimizar o código para melhor desempenho.
-
-### Sênior
-- **Lógica de Programação Avançada**: Habilidade em desenvolver soluções mais complexas e eficientes.
-- **Aplicação Avançada dos Princípios SOLID**: Implementação consistente dos princípios em cenários mais complexos.
-- **Arquitetura de Software e Design de Soluções**: Habilidade em projetar e implementar arquiteturas complexas e eficientes.
-- **Liderança Técnica em Práticas de Desenvolvimento**: Orientação e mentoria para outros desenvolvedores, promoção de boas práticas.
-- **Testes Unitários e de Integração Avançados**: Proficiência em criar uma suíte de testes abrangente, incluindo testes de integração.
-- **Análise e Resolução de Problemas Complexos**: Capacidade de analisar e resolver problemas técnicos complexos e desafiadores.
-- **Otimização e Performance do Código**: Capacidade de otimizar o código para melhor desempenho.
-- **Documentação Técnica Abrangente**: Uma documentação completa e detalhada é essencial. Isso inclui não apenas a documentação da API com informações claras sobre endpoints, parâmetros, formatos de requisição e resposta, mas também uma visão geral do software, descrevendo sua arquitetura, componentes principais, e instruções passo a passo para instalação, configuração e utilização. A documentação deve ser estruturada de forma que seja acessível tanto para desenvolvedores quanto para usuários finais, garantindo uma compreensão abrangente do sistema como um todo.
-
-
-## Tarefas
-
+## Requisitos do Projeto
 Desenvolva uma API em Laravel que inclua o CRUD para:
 - Usuários
 - Posts
 - Tags
 
-As regras de estruturação da modelagem são:
+### Regras de Modelagem
 - O usuário (users) possui diferentes postagens (posts).
 - As postagens (posts) possuem várias palavras-chave (tags).
 
+### Endpoints
 Implemente os seguintes endpoints com operações CRUD para:
 - Usuários
 - Posts
 - Tags
 
-**NOTA:**
-As rotas devem ser acessadas com o prefixo /api. Por exemplo: /api/posts  
-É essencial o desenvolvimento de um Dockerfile e um docker-compose para garantir que o projeto seja executado na máquina do avaliador.  
-É de suma importância a descrição detalhada dos endpoints e funcionalidades para que o avaliador possa testar o projeto em sua máquina.
+**Nota:** As rotas devem ser acessadas com o prefixo `/api`. Por exemplo: `/api/posts`  
 
-## Opcionais (Não obrigatórios, mas recomendados)
+---
 
-- Implementação de testes unitários.
-- Uso de Swagger ou Scribe Documentation.
-- Criação de uma interface gráfica simples para exposição dos dados (React, Vue, Bootstrap, Blade ou Livewire).
+## Estrutura do Projeto
+O projeto é composto por duas pastas principais:
+- `api-BlogSphere` - Contém a API desenvolvida em Laravel.
+- `frontend-BlogSphere` - Contém o frontend desenvolvido em Vue.js.
 
-Após a avaliação técnica, em caso de aprovação, entraremos em contato para uma conversa técnica sobre a implementação. Se o candidato não for aprovado, forneceremos um retorno com o aviso e o motivo.
+Cada pasta possui um README específico explicando detalhadamente sua estrutura e funcionamento.
 
-### Boa sorte!
-Equipe de Desenvolvimento AVANSYS/ACP - Projeto UEFS
+---
+
+## Ambiente de Desenvolvimento com Docker
+Para facilitar a execução e configuração do projeto, utilizamos Docker e Docker Compose.
+
+### Tecnologias Utilizadas
+- **Backend:** Laravel 11 (PHP 8.3)
+- **Banco de Dados:** MySQL 8.0.33
+- **Frontend:** Vue.js + Vite
+
+### Instalação e Execução
+
+**Requisitos:**
+- Docker e Docker Compose instalados na máquina.
+
+**Passos para rodar o projeto:**
+1. Clone o repositório
+2. No terminal, navegue até a raiz do projeto TEST-DEVS-UEFS e execute:
+   ```sh
+   docker compose up --build
+   ```
+3. Aguarde a inicialização dos containers.
+
+---
+
+## Serviços e Portas Utilizadas
+
+| Serviço      | URL de Acesso                  | Porta |
+|--------------|--------------------------------|------|
+| API Backend | [http://localhost:8000](http://localhost:8000) | 8000 |
+| Frontend    | [http://localhost:5173](http://localhost:5173) | 5173 |
+| Swagger     | [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation) | 8000 |
+| MySQL       | -                              | 3306 |
+
+---
+
+## Estrutura do Docker Compose
+```yaml
+version: "3.8"
+
+services:
+  # Backend (Laravel)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api-BlogSphere:/var/www
+    networks:
+      - app-network
+    depends_on:
+      - mysql
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: blogSphore
+      DB_USERNAME: user
+      DB_PASSWORD: password
+    command: >
+      /bin/bash -c "
+      while ! nc -z mysql 3306; do
+        echo 'Aguardando o banco de dados...';
+        sleep 1;
+      done;
+      php artisan migrate &&
+      php artisan serve --host=0.0.0.0 --port=8000
+      "
+
+  # Banco de Dados (MySQL)
+  mysql:
+    image: mysql:8.0.33-oracle
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: blogSphore
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  # Frontend (Vue.js)
+  frontend:
+    image: node:18.15.0
+    container_name: frontend-container
+    working_dir: /var/www/frontend-BlogSphere
+    volumes:
+      - ./frontend-BlogSphere:/var/www/frontend-BlogSphere
+    networks:
+      - app-network
+    ports:
+      - "5173:5173"
+      - "5174:5174"
+    depends_on:
+      - app
+    command: >
+      /bin/bash -c "
+      npm install &&
+      npm run dev -- --host 0.0.0.0 --port 5173
+      "
+
+# Definição da Rede Compartilhada
+networks:
+  app-network:
+    driver: bridge
+
+# Persistência de Dados do Banco de Dados
+volumes:
+  mysql-data:
+
+```
+
+```dockerfile
+# Define a imagem base do PHP 8.3 com FPM
+FROM php:8.3-fpm
+
+# Atualiza os pacotes e instala as dependências do sistema operacional necessárias para o Laravel e o MySQL
+RUN apt-get update && apt-get install -y \
+    libpng-dev \                 # Suporte para manipulação de imagens PNG
+    libjpeg-dev \                # Suporte para manipulação de imagens JPEG
+    libfreetype6-dev \           # Suporte para fontes TrueType (necessário para GD)
+    libmariadb-dev-compat \      # Biblioteca para compatibilidade com MariaDB
+    libmariadb-dev \             # Biblioteca de desenvolvimento do MariaDB para conexões MySQL
+    unzip \                      # Utilitário para descompactar arquivos ZIP
+    curl \                       # Ferramenta para transferências de dados
+    git \                        # Sistema de controle de versão para dependências do projeto
+    zip \                        # Utilitário para compactação de arquivos
+    netcat-openbsd \             # Ferramenta para aguardar a conexão com o banco de dados antes de iniciar a aplicação
+    # Instalação do Node.js (necessário para o frontend)
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    # Configura o suporte ao MySQL no PHP
+    && docker-php-ext-configure mysqli --with-mysqli \
+    && docker-php-ext-install mysqli pdo pdo_mysql \
+    # Remove arquivos temporários para reduzir o tamanho da imagem
+    && rm -rf /var/lib/apt/lists/*
+
+# Instala o Composer, que é o gerenciador de dependências do PHP
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copia todos os arquivos do projeto para dentro do container
+COPY . /var/www
+
+# Define o diretório de trabalho como a raiz do projeto dentro do container
+WORKDIR /var/www
+
+# Instala as dependências do frontend usando npm
+WORKDIR /var/www/frontend-BlogSphere
+RUN npm install
+
+# Volta para o diretório raiz do projeto
+WORKDIR /var/www
+```
+Para mais informações sobre a API e o Frontend, consulte os README dentro das pastas **`api-BlogSphere`** e **`frontend-BlogSphere`**.
