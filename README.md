@@ -45,12 +45,18 @@ Para facilitar a execução e configuração do projeto, utilizamos Docker e Doc
 
 **Passos para rodar o projeto:**
 1. Clone o repositório
-2. No terminal, navegue até a raiz do projeto TEST-DEVS-UEFS e execute:
+   ```sh
+   git clone https://github.com/sandoelio/test-devs-uefs.git
+   ```
+2. Acesse a pasta clonada.
+   ```sh
+   cd test-devs-uefs
+   ```
+3. Execute:
    ```sh
    docker compose up --build
    ```
-3. Aguarde a inicialização dos containers.
-
+4. Aguarde a inicialização dos containers.
 ---
 
 ## Serviços e Portas Utilizadas
