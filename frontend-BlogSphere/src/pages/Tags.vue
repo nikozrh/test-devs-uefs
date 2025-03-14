@@ -8,11 +8,11 @@
 			</button>
 		</div>
 
-		<!-- Campo de Filtro por ID -->
+		<!-- Campo de Filtro por Nome -->
 		<div class="mb-3">
-			<label for="filterTagId" class="form-label">Filtrar por ID</label>
-			<input v-model="filterId" type="number" class="form-control" id="filterTagId"
-				placeholder="Digite o ID da tag" @input="filterTagsById" />
+			<label for="filterTagName" class="form-label">Filtrar</label>
+			<input v-model="filterName" type="text" class="form-control" id="filterTagName"
+				placeholder="Digite o nome da tag" @input="filterTags" />
 		</div>
 
 		<!-- Tabela de Tags -->
@@ -88,6 +88,7 @@ export default {
 			notification: "", // Mensagens de sucesso
 			formError: "", // Mensagens de erro no formulário
 			filterId: "", // ID digitado no filtro
+			filterName: "", // Nome digitado no campo de filtro
 		};
 	},
 	methods: {
@@ -102,16 +103,14 @@ export default {
 			}
 		},
 
-		// Filtra as tags pelo ID
-		filterTagsById() {
-			if (this.filterId === "") {
-				this.filteredTags = this.tags; // Mostra todas as tags se o filtro estiver vazio
-			} else {
-				const id = Number(this.filterId); // Converte para número
-				this.filteredTags = this.tags.filter(tag => tag.id === id); // Filtra pelo ID
-			}
+		filterTags() {
+			this.filteredTags = this.tags.filter((tag) => {
+				const matchesId = this.filterId === "" || tag.id === Number(this.filterId);
+				const matchesName = this.filterName === "" || tag.name.toLowerCase().includes(this.filterName.toLowerCase());
+				return matchesId && matchesName; // Retorna tags que atendem ambos os critérios
+			});
 		},
-
+		
 		// Abre o modal (criar ou editar)
 		openModal(tag = { id: null, name: "" }) {
 			this.form = { ...tag }; // Preenche o formulário com os dados

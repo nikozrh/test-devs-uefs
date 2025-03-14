@@ -8,12 +8,13 @@
 			</button>
 		</div>
 
-		<!-- Campo de Filtro por ID -->
+		<!-- Campo de Filtro por Nome do Usuário -->
 		<div class="mb-3">
-			<label for="filterPostId" class="form-label">Filtrar por ID</label>
-			<input v-model="filterId" type="number" class="form-control" id="filterPostId"
-				placeholder="Digite o ID da postagem" @input="filterPostsById" />
+			<label for="filterUserName" class="form-label">Filtrar</label>
+			<input v-model="filterUserName" type="text" class="form-control" id="filterUserName"
+				placeholder="Digite o nome do usuário" @input="filterPostsByUserName" />
 		</div>
+
 
 		<!-- Tabela de Postagens -->
 		<table class="table table-bordered table-hover">
@@ -40,8 +41,11 @@
 						<button @click="editPost(post)" class="btn btn-warning btn-sm me-2">
 							Editar
 						</button>
-						<button @click="deletePost(post.id)" class="btn btn-danger btn-sm">
+						<button @click="deletePost(post.id)" class="btn btn-danger btn-sm me-2">
 							Excluir
+						</button>
+						<button @click="goToForum" class="btn btn-info btn-sm btn-sm me-2">
+							Ler
 						</button>
 					</td>
 				</tr>
@@ -126,6 +130,7 @@ export default {
 			notification: "", // Mensagens de sucesso
 			formError: "", // Mensagens de erro no formulário
 			filterId: "", // ID digitado no filtro
+			filterUserName: "", // Nome do usuário digitado no filtro
 		};
 	},
 	methods: {
@@ -160,14 +165,16 @@ export default {
 			}
 		},
 
-		// Filtra as postagens pelo ID
-		filterPostsById() {
-			if (this.filterId === "") {
-				this.filteredPosts = this.posts; // Mostra todas as postagens se o filtro estiver vazio
-			} else {
-				const id = Number(this.filterId); // Converte para número
-				this.filteredPosts = this.posts.filter(post => post.id === id); // Filtra pelo ID
-			}
+		goToForum() {
+			// Redireciona para a rota do Fórum
+			this.$router.push('/forum');
+		},
+
+		filterPostsByUserName() {
+			// Filtra as postagens pelo nome do usuário
+			this.filteredPosts = this.posts.filter((post) =>
+				post.user.name.toLowerCase().includes(this.filterUserName.toLowerCase())
+			);
 		},
 
 		// Abre o modal (criar ou editar)

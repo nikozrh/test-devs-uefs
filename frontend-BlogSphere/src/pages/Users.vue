@@ -14,12 +14,14 @@
 			</button>
 		</div>
 
-		<!-- Campo de Filtro por ID -->
+		<!-- Campo de Filtro por Nome -->
 		<div class="mb-3">
-			<label for="filterId" class="form-label">Filtrar por ID</label>
-			<input v-model="filterId" type="number" class="form-control" id="filterId"
-				placeholder="Digite o ID do usuário" @input="filterUsersById" />
+			<label for="filterName" class="form-label">Filtrar</label>
+			<input v-model="filterName" type="text" class="form-control" id="filterName"
+				placeholder="Digite o nome do usuário" @input="filterUsers" />
 		</div>
+
+
 
 		<!-- Tabela de Usuários -->
 		<table class="table table-bordered table-hover">
@@ -70,7 +72,7 @@
 				</div>
 				<!-- Campo de Senha -->
 				<div class="mb-3">
-					<label for="password" class="form-label">Senha (preencha apenas se quiser alterar)</label>
+					<label for="password" class="form-label">Senha (minimo 8 digitos)</label>
 					<input v-model="form.password" type="password" class="form-control" id="password" />
 				</div>
 				<!-- Botões -->
@@ -104,6 +106,7 @@ export default {
 			error: false, // Indica erro ao buscar usuários
 			formError: "", // Para mensagens de erro no modal
 			filterId: "", // Armazena o valor digitado no campo de filtro
+			filterName: "", // Texto para filtrar por Nome
 		};
 	},
 	methods: {
@@ -118,6 +121,15 @@ export default {
 				console.error("Erro ao buscar usuários:", error);
 				this.error = true; // Ativa o alerta de erro
 			}
+		},
+
+		filterUsers() {
+			// Filtra a lista de usuários considerando ID e Nome
+			this.filteredUsers = this.users.filter((user) => {
+				const matchesId = this.filterId === "" || user.id === Number(this.filterId);
+				const matchesName = this.filterName === "" || user.name.toLowerCase().includes(this.filterName.toLowerCase());
+				return matchesId && matchesName; // Retorna usuários que atendem ambos os critérios
+			});
 		},
 
 		// Abre o modal (editar ou criar)

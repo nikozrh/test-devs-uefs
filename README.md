@@ -64,128 +64,323 @@ Para facilitar a execução e configuração do projeto, utilizamos Docker e Doc
 
 ---
 
-## Estrutura do Docker Compose
-```yaml
-version: "3.8"
+# API Blogsphere
 
-services:
-  # Backend (Laravel)
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: laravel-app
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./api-BlogSphere:/var/www
-    networks:
-      - app-network
-    depends_on:
-      - mysql
-    environment:
-      DB_CONNECTION: mysql
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_DATABASE: blogSphore
-      DB_USERNAME: user
-      DB_PASSWORD: password
-    command: >
-      /bin/bash -c "
-      while ! nc -z mysql 3306; do
-        echo 'Aguardando o banco de dados...';
-        sleep 1;
-      done;
-      php artisan migrate &&
-      php artisan serve --host=0.0.0.0 --port=8000
-      "
+## Descrição
+Esta é uma API REST desenvolvida em Laravel 11 com PHP 8.3, utilizando MySQL como banco de dados. A API permite a gestão de Usuários, Tags e Postagens, seguindo o padrão arquitetural MVC com Service e Repository. Os testes são implementados utilizando PHPUnit e Mockery, garantindo a integridade dos serviços. A documentação da API é gerada pelo Swagger (L5-Swagger).
 
-  # Banco de Dados (MySQL)
-  mysql:
-    image: mysql:8.0.33-oracle
-    container_name: mysql-container
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: blogSphore
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - app-network
+---
 
-  # Frontend (Vue.js)
-  frontend:
-    image: node:18.15.0
-    container_name: frontend-container
-    working_dir: /var/www/frontend-BlogSphere
-    volumes:
-      - ./frontend-BlogSphere:/var/www/frontend-BlogSphere
-    networks:
-      - app-network
-    ports:
-      - "5173:5173"
-      - "5174:5174"
-    depends_on:
-      - app
-    command: >
-      /bin/bash -c "
-      npm install &&
-      npm run dev -- --host 0.0.0.0 --port 5173
-      "
+## Tecnologias Utilizadas
+- **Framework:** Laravel 11
+- **Linguagem:** PHP 8.3
+- **Banco de Dados:** MySQL
+- **Testes:** PHPUnit (^11.0.1) e Mockery (^1.6)
+- **Documentação:** L5-Swagger (^9.0)
 
-# Definição da Rede Compartilhada
-networks:
-  app-network:
-    driver: bridge
+---
 
-# Persistência de Dados do Banco de Dados
-volumes:
-  mysql-data:
+## Endpoints CRUD
+
+### **1. Usuários**
+- **Criar Usuário**
+  - `POST /api/users`
+  - Request Body:
+    ```json
+    {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "senha123"
+    }
+    ```
+- **Listar Usuários**
+  - `GET /api/users`
+- **Buscar Usuário por ID**
+  - `GET /api/users/{id}`
+- **Atualizar Usuário**
+  - `PATCH /api/users/{id}`
+  - Request Body:
+    ```json
+    {
+      "name": "John Updated",
+      "email": "johnupdated@example.com"
+    }
+    ```
+- **Deletar Usuário**
+  - `DELETE /api/users/{id}`
+
+---
+
+### **2. Tags**
+- **Criar Tag**
+  - `POST /api/tags`
+  - Request Body:
+    ```json
+    {
+      "name": "Inspirador"
+    }
+    ```
+- **Listar Tags**
+  - `GET /api/tags`
+- **Buscar Tag por ID**
+  - `GET /api/tags/{id}`
+- **Atualizar Tag**
+  - `PATCH /api/tags/{id}`
+- **Deletar Tag**
+  - `DELETE /api/tags/{id}`
+
+---
+
+### **3. Postagens**
+- **Criar Postagem**
+  - `POST /api/posts`
+  - Request Body:
+    ```json
+    {
+      "title": "Meu Primeiro Post",
+      "content": "Este é um exemplo de postagem.",
+      "user_id": 1,
+      "tags": [1, 2]
+    }
+    ```
+- **Listar Postagens**
+  - `GET /api/posts`
+- **Buscar Postagem por ID**
+  - `GET /api/posts/{id}`
+- **Atualizar Postagem**
+  - `PATCH /api/posts/{id}`
+- **Deletar Postagem**
+  - `DELETE /api/posts/{id}`
+
+---
+
+## **Tratamento de Erros**
+A API segue os padrões de respostas HTTP para indicar erros:
+- **400 Bad Request** – Dados enviados são inválidos.
+- **401 Unauthorized** – Ação requer autenticação.
+- **403 Forbidden** – O usuário não tem permissão.
+- **404 Not Found** – Recurso não encontrado.
+- **422 Unprocessable Entity** – Erro de validação.
+- **500 Internal Server Error** – Erro interno do servidor.
+
+Exemplo de resposta para erro 422:
+```json
+{
+  "message": "O campo email é obrigatório.",
+  "errors": {
+    "email": [
+      "O campo email é obrigatório."
+    ]
+  }
+}
+```
+
+---
+
+## **Arquitetura da API**
+- **Controller:** Responsável por receber as requisições e retornar respostas.
+- **Service:** Contém a lógica de negócio.
+- **Repository:** Manipula os dados do banco de dados.
+- **Models:** Representam as entidades do sistema.
+
+Exemplo de estrutura de pastas:
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── UserController.php
+│   │   ├── TagController.php
+│   │   ├── PostController.php
+├── Models/
+│   ├── User.php
+│   ├── Tag.php
+│   ├── Post.php
+├── Services/
+│   ├── UserService.php
+│   ├── TagService.php
+│   ├── PostService.php
+├── Repositories/
+│   ├── UserRepository.php
+│   ├── TagRepository.php
+│   ├── PostRepository.php
+tests/
+├── Feature/
+│   ├── UserTest.php
+│   ├── TagTest.php
+│   ├── PostTest.php
 
 ```
 
-```dockerfile
-# Define a imagem base do PHP 8.3 com FPM
-FROM php:8.3-fpm
+---
 
-# Atualiza os pacotes e instala as dependências do sistema operacional necessárias para o Laravel e o MySQL
-RUN apt-get update && apt-get install -y \
-    libpng-dev \                 # Suporte para manipulação de imagens PNG
-    libjpeg-dev \                # Suporte para manipulação de imagens JPEG
-    libfreetype6-dev \           # Suporte para fontes TrueType (necessário para GD)
-    libmariadb-dev-compat \      # Biblioteca para compatibilidade com MariaDB
-    libmariadb-dev \             # Biblioteca de desenvolvimento do MariaDB para conexões MySQL
-    unzip \                      # Utilitário para descompactar arquivos ZIP
-    curl \                       # Ferramenta para transferências de dados
-    git \                        # Sistema de controle de versão para dependências do projeto
-    zip \                        # Utilitário para compactação de arquivos
-    netcat-openbsd \             # Ferramenta para aguardar a conexão com o banco de dados antes de iniciar a aplicação
-    # Instalação do Node.js (necessário para o frontend)
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    # Configura o suporte ao MySQL no PHP
-    && docker-php-ext-configure mysqli --with-mysqli \
-    && docker-php-ext-install mysqli pdo pdo_mysql \
-    # Remove arquivos temporários para reduzir o tamanho da imagem
-    && rm -rf /var/lib/apt/lists/*
+## **Testes com Mockery e PHPUnit**
+Os testes utilizam Mockery para simular serviços e evitar manipulação real do banco de dados.
 
-# Instala o Composer, que é o gerenciador de dependências do PHP
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Copia todos os arquivos do projeto para dentro do container
-COPY . /var/www
-
-# Define o diretório de trabalho como a raiz do projeto dentro do container
-WORKDIR /var/www
-
-# Instala as dependências do frontend usando npm
-WORKDIR /var/www/frontend-BlogSphere
-RUN npm install
-
-# Volta para o diretório raiz do projeto
-WORKDIR /var/www
+Exemplo de teste unitário para listar usuários:
+```php
+public function test_it_can_list_users()
+{
+    $userServiceMock = Mockery::mock(\App\Services\UserService::class);
+    $this->app->instance(\App\Services\UserService::class, $userServiceMock);
+    
+    $userServiceMock->shouldReceive('getAllUsers')
+        ->once()
+        ->andReturn([
+            ['name' => 'John Doe', 'email' => 'john@example.com'],
+            ['name' => 'Jane Doe', 'email' => 'jane@example.com']
+        ]);
+    
+    $response = $this->getJson('/api/users');
+    $response->assertStatus(200)
+             ->assertJsonCount(2);
+}
 ```
-Para mais informações sobre a API e o Frontend, consulte os README dentro das pastas **`api-BlogSphere`** e **`frontend-BlogSphere`**.
+![Testes](./imagens/Testes.png)
+---
+
+## **Documentação com Swagger**
+A API utiliza o pacote **L5-Swagger** para documentação interativa. Após configurar o pacote, acesse a documentação via:
+
+```
+http://localhost:8000/api/documentation
+```
+
+![Swagger](./imagens/Swagger.png)
+<br>
+
+![Swagger1](./imagens/Swagger1.png)
+<br>
+
+![Swagger2](./imagens/Swagger2.png)
+<br>
+
+![Swagger3](./imagens/Swagger3.png)
+
+---
+
+## **Próximos Passos**
+- Adicionar autenticação.
+- Melhorar a validação dos dados de entrada.
+- Implementar paginação nas listagens.
+---
+
+<h1>BlogSphere Frontend</h1>
+Bem-vindo ao BlogSphere Frontend! Este projeto é um frontend construído com Vue.js, que oferece uma interface para gerenciar usuários, postagens, tags e um fórum com paginação.</br> 
+O sistema é simples, bem organizado e integrado com uma API backend.
+
+<hr>
+
+📚 **Bibliotecas e Ferramentas Utilizadas**
+Abaixo estão as principais ferramentas e bibliotecas utilizadas no desenvolvimento:
+
+* Vue.js: Framework para construção de interfaces reativas e escaláveis.
+
+* Axios: Biblioteca para consumir a API REST.
+
+* Vue Router: Gerenciamento de rotas para navegação no frontend.
+
+* Bootstrap: Biblioteca para estilização responsiva.
+
+* UI Avatars: Gerador de avatares dinâmicos baseado no nome.
+
+* ESLint: Ferramenta para manter a qualidade do código.
+
+* Prettier: Formatação automática de código para maior consistência.
+
+* Node.js: Ambiente de execução JavaScript.
+
+* Vite: Ferramenta para desenvolvimento rápido de aplicações Vue.js.
+
+<hr>
+
+🗂️ **Estrutura do Projeto**
+A organização do projeto foi feita para garantir clareza e escalabilidade. Veja abaixo a estrutura dos diretórios:
+```
+src/
+├── components/
+│   ├── Navbar.vue         # Menu de navegação no topo
+│   ├── Modal.vue          # Componente reutilizável para modais
+│
+├── pages/
+│   ├── Users.vue          # Gerenciamento de usuários
+│   ├── Posts.vue          # Gerenciamento de posts
+│   ├── Tags.vue           # Gerenciamento de tags
+│   ├── Home.vue           # Página inicial
+│   ├── Forum.vue          # Página do fórum de discussões
+│   ├── NotFound.vue       # Página de erro 404
+│
+├── router/
+│   ├── index.js           # Configuração de rotas
+│
+├── services/
+│   ├── api.js             # Serviço para comunicação com a API
+│
+├── App.vue                # Componente principal
+├── main.js                # Ponto de entrada
+```
+<hr>
+
+🔧 **Pré-requisitos**
+
+Esses sao os pré-requisitos para rodar o projeto que irão instalar com o docker assim que o projeto for clonado.
+
+* Docker: Ambiente de execução para aplicações em containers.
+
+<hr>
+
+🖼️ **Demonstrações de Tela**
+
+1. **Tela inicial**
+
+![Tela Inicial](./imagens/Home.png)
+
+2. **Tela de Usuario**.
+
+![Tela usuario](./imagens/Usuario.png)
+
+3. **Tela de Tags**
+
+![Tela tags](./imagens/Tags.png)
+
+4. **Tela de Postagens**
+
+![Tela postagens](./imagens/Postagem.png)
+
+2. **Forum**
+Tela que exibe as postagens com título, usuário, tags e paginação.
+
+![Forum](./imagens/Forum.png)
+
+3. **Erro 404**
+Página exibida para rotas inexistentes.
+
+![Erro 404](./imagens/Erro.png)
+
+<hr>
+
+🚀 **Funcionalidades**
+
+**Nota Importante**: Devido à reatividade do menu no frontend, é necessário atualizar a página manualmente após cada alteração para refletir as mudanças realizadas.
+
+* Gerenciamento de Usuários
+
+    * Listagem, criação, edição e exclusão de usuários.
+
+* Gerenciamento de Postagens
+
+    * Listagem, criação, edição e exclusão de postagens,Ler postagens.
+
+* Gerenciamento de Tags
+
+    * Criação, edição e exclusão de tags associadas às postagens.
+
+<hr>
+
+📐 **Possíveis Melhorias**
+* Adicionar sistema de autenticação para rotas protegidas.
+
+* Habilitar upload de imagens para personalizar avatares.
+
+* Melhorar a experiência com notificações para erros e sucessos.
+
+

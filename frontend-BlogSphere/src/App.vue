@@ -9,11 +9,6 @@
         <footer class="bg-primary text-light text-center py-3 mt-auto">
             © 2025 BlogSphere - Teste prático UEFS - Avansys/ACP Group.
         </footer>
-
-        <!-- Botão Flutuante para o Fórum -->
-        <button @click="$router.push('/forum')" class="floating-btn">
-            Fórum
-        </button>
     </div>
 </template>
 
