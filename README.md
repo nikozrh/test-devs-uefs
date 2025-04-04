@@ -1,69 +1,98 @@
-# Teste Técnico para a vaga de Engenheiro de Software no projeto UEFS - Avansys/ACP Group
+# Teste Técnico para a vaga de Engenheiro de Software no projeto UEFS - Netra
 
-Este desafio técnico é destinado aos candidatos à posição de Engenheiro de Software no projeto UEFS - Avansys/ACP Group. O objetivo é avaliar as competências em desenvolvimento de software através da criação de uma API Restful utilizando PHP, Laravel (versão 8 ou superior), um Sistema de Gerenciamento de Banco de Dados (SGBD) de sua escolha, e Docker. O prazo para a realização deste teste é de 5 dias, e a entrega deve ser feita por meio do GitHub para análise.
+Este desafio técnico é destinado aos candidatos à posição de Engenheiro de Software no projeto UEFS - NETRA. O objetivo é avaliar competências práticas em desenvolvimento de software por meio da criação de uma API RESTful utilizando PHP (Laravel 8 ou superior), um Sistema de Gerenciamento de Banco de Dados (SGBD) de sua escolha, e Docker.
 
-Para participar, faça um fork do repositório, aplique a solução proposta e envie para nossa avaliação.
+O prazo para a realização do teste é de 5 dias corridos, e a entrega deve ser feita por meio de um repositório no GitHub.
 
-## Critérios de Avaliação Técnica por Nível de Senioridade
+Para participar, faça um fork deste repositório, aplique a solução proposta e envie para nossa análise.
+
+---
+
+## Escopo do Teste Técnico
+
+Você deverá desenvolver uma API RESTful com as seguintes funcionalidades:
+
+- CRUD de **Usuários**
+- CRUD de **Posts**
+- CRUD de **Tags**
+
+### Regras de Relacionamento
+
+- Um **usuário** pode ter várias **postagens**.
+- Uma **postagem** pode conter várias **tags** (palavras-chave).
+
+### Requisitos Técnicos do Projeto
+
+- Todas as rotas devem seguir o padrão `/api`, por exemplo: `/api/posts`.
+- Fornecer um `Dockerfile` e `docker-compose.yml` para execução do projeto.
+- Incluir documentação(README) clara sobre como rodar o projeto localmente, como testar os endpoints, visão geral da arquitetura e estrutura do projeto e destaques sobre decisões técnicas e particularidades da implementação.
+
+---
+
+## Avaliação Técnica (durante o **teste prático**)
+
+Serão avaliados os seguintes pontos conforme o nível de senioridade:
 
 ### Para Todos os Níveis
-- **Conhecimento e Uso de Recursos do Laravel**
-- **Familiaridade com Docker e Docker Compose**
-- **Organização e Documentação do Código**
-- **Implementação Efetiva de uma API Restful**
-- **Utilização Adequada dos Recursos do SGBD Escolhido**
 
-### Júnior
-- **Fundamentos de Lógica de Programação**: Capacidade de implementar lógicas simples e eficientes.
-- **Conhecimento Básico dos Princípios SOLID**: Compreensão básica e aplicação em cenários simples.
-- **Adesão aos Padrões PSR**: Implementação básica dos padrões de estilo de código PHP.
-- **Uso Inicial de Testes Unitários (PHPUnit ou PEST) - Não é obrigatório**: Conhecimento básico e aplicação inicial em casos simples.
+- Conhecimento e uso de recursos do Laravel  
+- Familiaridade com Docker e Docker Compose  
+- Organização, clareza e estrutura do código  
+- Implementação funcional da API RESTful  
+- Utilização adequada do banco de dados escolhido  
 
-### Pleno
-- **Lógica de Programação Avançada**: Habilidade em desenvolver soluções mais complexas e eficientes.
-- **Aplicação Avançada dos Princípios SOLID**: Implementação consistente dos princípios em cenários mais complexos.
-- **Testes Unitários Avançados (PHPUnit ou PEST)**: Habilidade em escrever testes unitários mais abrangentes e complexos.
-- **Otimização e Performance do Código**: Capacidade de otimizar o código para melhor desempenho.
+### Nível Júnior
 
-### Sênior
-- **Lógica de Programação Avançada**: Habilidade em desenvolver soluções mais complexas e eficientes.
-- **Aplicação Avançada dos Princípios SOLID**: Implementação consistente dos princípios em cenários mais complexos.
-- **Arquitetura de Software e Design de Soluções**: Habilidade em projetar e implementar arquiteturas complexas e eficientes.
-- **Liderança Técnica em Práticas de Desenvolvimento**: Orientação e mentoria para outros desenvolvedores, promoção de boas práticas.
-- **Testes Unitários e de Integração Avançados**: Proficiência em criar uma suíte de testes abrangente, incluindo testes de integração.
-- **Análise e Resolução de Problemas Complexos**: Capacidade de analisar e resolver problemas técnicos complexos e desafiadores.
-- **Otimização e Performance do Código**: Capacidade de otimizar o código para melhor desempenho.
-- **Documentação Técnica Abrangente**: Uma documentação completa e detalhada é essencial. Isso inclui não apenas a documentação da API com informações claras sobre endpoints, parâmetros, formatos de requisição e resposta, mas também uma visão geral do software, descrevendo sua arquitetura, componentes principais, e instruções passo a passo para instalação, configuração e utilização. A documentação deve ser estruturada de forma que seja acessível tanto para desenvolvedores quanto para usuários finais, garantindo uma compreensão abrangente do sistema como um todo.
+- Fundamentos de lógica de programação  
+- Conhecimento básico dos princípios SOLID  
+- Adesão aos padrões PSR (estilo de código PHP)  
+- Uso inicial de testes (PHPUnit ou Pest) — **não obrigatório**  
 
+### Nível Pleno
 
-## Tarefas
+- Lógica de programação mais estruturada  
+- Aplicação consistente dos princípios SOLID  
+- Implementação de testes unitários (PHPUnit ou Pest)  
+- Boas práticas de performance e legibilidade do código  
 
-Desenvolva uma API em Laravel que inclua o CRUD para:
-- Usuários
-- Posts
-- Tags
+### Nível Sênior
 
-As regras de estruturação da modelagem são:
-- O usuário (users) possui diferentes postagens (posts).
-- As postagens (posts) possuem várias palavras-chave (tags).
+- Arquitetura bem definida e organização do projeto  
+- Uso estratégico dos princípios SOLID em componentes reutilizáveis  
+- Testes completos (unitários e, se possível, de integração)  
+- Otimizações de performance no código e consultas  
+- Documentação técnica clara e abrangente (API, arquitetura, setup)  
+- Uso de boas práticas de versionamento e estruturação do repositório  
 
-Implemente os seguintes endpoints com operações CRUD para:
-- Usuários
-- Posts
-- Tags
+---
 
-**NOTA:**
-As rotas devem ser acessadas com o prefixo /api. Por exemplo: /api/posts  
-É essencial o desenvolvimento de um Dockerfile e um docker-compose para garantir que o projeto seja executado na máquina do avaliador.  
-É de suma importância a descrição detalhada dos endpoints e funcionalidades para que o avaliador possa testar o projeto em sua máquina.
+## Avaliação Complementar (durante a **entrevista técnica**)
 
-## Opcionais (Não obrigatórios, mas recomendados)
+Após a entrega e análise do teste prático, os candidatos que avançarem para a próxima etapa participarão de uma entrevista técnica, onde serão avaliados critérios como:
 
-- Implementação de testes unitários.
-- Uso de Swagger ou Scribe Documentation.
-- Criação de uma interface gráfica simples para exposição dos dados (React, Vue, Bootstrap, Blade ou Livewire).
+- Clareza na explicação de decisões técnicas  
+- Capacidade de análise e resolução de problemas  
+- Conhecimento sobre arquitetura de software e design de soluções  
+- Abordagem colaborativa e visão de liderança técnica (para cargos mais seniores)  
+- Nível de profundidade em testes, padrões, e boas práticas além do que foi entregue  
 
-Após a avaliação técnica, em caso de aprovação, entraremos em contato para uma conversa técnica sobre a implementação. Se o candidato não for aprovado, forneceremos um retorno com o aviso e o motivo.
+---
 
-### Boa sorte!
-Equipe de Desenvolvimento AVANSYS/ACP - Projeto UEFS
+## Recursos Opcionais (recomendados, mas não obrigatórios)
+
+- Documentação automática com Swagger ou Scribe  
+- Interface gráfica simples para consulta dos dados (React, Vue, Blade, Livewire, etc.)  
+
+---
+
+## Retorno
+
+Após a análise técnica:
+
+- Se aprovado, entraremos em contato para a entrevista técnica.  
+- Se não aprovado, forneceremos um retorno com os principais pontos de melhoria observados.
+
+---
+
+**Boa sorte!**  
+Equipe de Desenvolvimento NETRA – Projeto UEFS
