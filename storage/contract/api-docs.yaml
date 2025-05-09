@@ -1,0 +1,568 @@
+openapi: 3.0.0
+info:
+  title: 'API for managing users, posts, and tags'
+  description: 'API for the technical test for the Software Engineer position in the UEFS project - Avansys/ACP Group'
+  termsOfService: 'http://api.example.com/terms'
+  contact:
+    name: 'API Support'
+    url: 'https://example.com/support'
+    email: 'support@example.com'
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+  version: 1.0.0
+
+servers:
+  - url: 'http://localhost:8000/api'
+    description: 'Local server'
+
+paths:
+  /posts:
+    get:
+      tags:
+        - Posts
+      summary: 'List all posts'
+      operationId: cce7863441436fd49dc474491f658292
+      responses:
+        '200':
+          description: 'Posts list retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+    post:
+      tags:
+        - Posts
+      summary: 'Create a new post'
+      operationId: 21a6ac5f9280a3cf958c3d066b5600ee
+      requestBody:
+        description: 'Data for the post to be created'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCreate'
+      responses:
+        '201':
+          description: 'Post created successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '422':
+          description: 'Validation error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /posts/{id}:
+    get:
+      tags:
+        - Posts
+      summary: 'Retrieve details of a post'
+      operationId: 6b9af649206ee145dfc5584522c37327
+      parameters:
+        - name: id
+          in: path
+          description: 'Post ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Post retrieved successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: 'Post not found'
+    put:
+      tags:
+        - Posts
+      summary: 'Update a post'
+      operationId: 56b92780703545f9cdee51b2f0bfd2f3
+      parameters:
+        - name: id
+          in: path
+          description: 'Post ID'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: 'Data for the post to be updated'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostUpdate'
+      responses:
+        '200':
+          description: 'Post updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: 'Post not found'
+        '422':
+          description: 'Validation error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    delete:
+      tags:
+        - Posts
+      summary: 'Delete a post'
+      operationId: a879f12c52aaa72acee21585bf617046
+      parameters:
+        - name: id
+          in: path
+          description: 'Post ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Post deleted successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: 'Post not found'
+
+  /tags:
+    get:
+      tags:
+        - Tags
+      summary: 'List all tags'
+      operationId: 566a70c4a8ca7c7dd9a6d666f64728a6
+      responses:
+        '200':
+          description: 'Tags list retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+    post:
+      tags:
+        - Tags
+      summary: 'Create a new tag'
+      operationId: c2812b6e11418dc90bfd41147c2c78c9
+      requestBody:
+        description: 'Data for the tag to be created'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagCreate'
+      responses:
+        '201':
+          description: 'Tag created successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '422':
+          description: 'Validation error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /tags/{id}:
+    get:
+      tags:
+        - Tags
+      summary: 'Retrieve details of a tag'
+      operationId: ae297f491633fb2505eef3f3018bffd5
+      parameters:
+        - name: id
+          in: path
+          description: 'Tag ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Tag retrieved successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '404':
+          description: 'Tag not found'
+    put:
+      tags:
+        - Tags
+      summary: 'Update a tag'
+      operationId: 41d027b67a1dbcae41406e06a4333598
+      parameters:
+        - name: id
+          in: path
+          description: 'Tag ID'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: 'Data for the tag to be updated'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagUpdate'
+      responses:
+        '200':
+          description: 'Tag updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '404':
+          description: 'Tag not found'
+        '422':
+          description: 'Validation error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    delete:
+      tags:
+        - Tags
+      summary: 'Delete a tag'
+      operationId: 20ff72ee52cc57bcbdf81b4fdf09ed8f
+      parameters:
+        - name: id
+          in: path
+          description: 'Tag ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Tag deleted successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: 'Tag not found'
+
+  /users:
+    get:
+      tags:
+        - Users
+      summary: 'List all users'
+      operationId: 7208c29037df2b8bb02499ba39ed8a78
+      responses:
+        '200':
+          description: 'Users list retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - Users
+      summary: 'Create a new user'
+      operationId: 262eb5ca1fdea354023c0a8870442c1e
+      requestBody:
+        description: 'Data for the user to be created'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: 'User created successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: 'Validation error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: 'Retrieve details of a user'
+      operationId: 6946bbab7898f59a09e3c8e529a38907
+      parameters:
+        - name: id
+          in: path
+          description: 'User ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'User retrieved successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 'User not found'
+    put:
+      tags:
+        - Users
+      summary: 'Update a user'
+      operationId: 05028d02ea3e9a99abd6260cfe05b179
+      parameters:
+        - name: id
+          in: path
+          description: 'User ID'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: 'Data for the user to be updated'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: 'User updated successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 'User not found'
+        '422':
+          description: 'Validation error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    delete:
+      tags:
+        - Users
+      summary: 'Delete a user'
+      operationId: b3d28da5dc9de7fc1bd425f93b54ff7b
+      parameters:
+        - name: id
+          in: path
+          description: 'User ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'User deleted successfully'
+          content:
+            application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+        '404':
+          description: 'User not found'
+
+components:
+  schemas:
+    Pagination:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        per_page:
+          type: integer
+        total:
+          type: integer
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+
+    UserCreate:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        password:
+          type: string
+          minLength: 8
+
+    UserUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        password:
+          type: string
+          minLength: 8
+
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+        user_id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/User'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+
+    PostCreate:
+      type: object
+      required:
+        - title
+        - content
+        - user_id
+      properties:
+        title:
+          type: string
+          maxLength: 255
+        content:
+          type: string
+        user_id:
+          type: integer
+        tags:
+          description: 'Associated tag IDs'
+          type: array
+          items:
+            type: integer
+
+    PostUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 255
+        content:
+          type: string
+        user_id:
+          type: integer
+        tags:
+          description: 'Associated tag IDs'
+          type: array
+          items:
+            type: integer
+
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+
+    TagCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 255
+
+    TagUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+
+    ValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Users
+    description: 'Operations related to users'
+  - name: Posts
+    description: 'Operations related to posts'
+  - name: Tags
+    description: 'Operations related to tags'
